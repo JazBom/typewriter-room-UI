@@ -5,41 +5,30 @@ import {
   Route
 } from "react-router-dom";
 import './App.css';
-import { theme } from './theme';
+import { Grid } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Nav } from './components/Nav';
-import { Container } from './components/Container';
+import { theme } from './theme';
+import { LogInOrRegister } from './components/LogInOrRegister';
+import { UserHome } from './components/UserHome';
 import { Footer } from './components/Footer';
 import { AllPages } from './components/AllPages';
 import { MyPages } from './components/MyPages';
 
 const App = () => {
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  }));
-  const classes = useStyles();
-  // className={classes.root}
+ 
   return (
     <Router>
     <div className="App">
       <ThemeProvider theme={theme}>
-      <Nav/>
       
       <Switch>
+
           <Route exact path="/">
-            <Container classes={classes.root}/>
+            <LogInOrRegister/>
           </Route>
 
-          <Route exact path="/home">
-            <Container/>
+          <Route exact path="/user-home">
+            <UserHome/>
           </Route>
 
           <Route exact path="/allpages">
