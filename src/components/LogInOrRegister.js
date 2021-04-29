@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 import { Button, TextField, Grid, makeStyles } from '@material-ui/core';
+import { logIn } from '../api/capstone-server';
 
 const LogInOrRegister = (props) => {
 
@@ -12,6 +14,42 @@ const LogInOrRegister = (props) => {
     },
   }));
   const classes = useStyles();
+
+  const history = useHistory();
+
+    const [registerForm, setRegisterForm] = useState({
+      name: '',
+      password: ''
+      })
+  
+    const [logInForm, setLogInForm] = useState({
+        name: '',
+        password: ''
+      })
+
+    const changeHandlerRegister = (e) => {
+        const newRegisterFormState = {...registerForm};
+        newRegisterFormState[e.target.name] = e.target.value;
+        console.log(newRegisterFormState);
+        setRegisterForm(newRegisterFormState);
+    }
+
+    const changeHandlerLogIn = (e) => {
+      const newLogInFormState = {...logInForm};
+      newLogInFormState[e.target.name] = e.target.value;
+      console.log(newLogInFormState);
+      setLogInForm(newLogInFormState);
+  }
+
+    const logInHandler = (e) => {
+        e.preventDefault();
+        logIn(logInForm)
+        .then((response) => {
+            if(response.token) {
+                history.replace('/userhome');
+            }
+        })
+    }
 
   return (
     <Grid
@@ -33,12 +71,16 @@ const LogInOrRegister = (props) => {
     <Grid>
     <TextField
           label="Name"
+          name="name"
+          onChange={changeHandlerRegister}
           id="outlined-size-small"
           variant="outlined"
           size="small"
         />
     <TextField
           label="Password"
+          name="password"
+          onChange={changeHandlerRegister}
           id="outlined-size-small"
           variant="outlined"
           size="small"
@@ -53,23 +95,27 @@ const LogInOrRegister = (props) => {
   </Grid>
   
   <Grid item xs={12} sm={12} lg={12}>
-  <form className="login">
+  <form className="login" onSubmit={logInHandler}>
     <Grid>
     <TextField
           label="Name"
+          name="name"
+          onChange={changeHandlerLogIn}
           id="outlined-size-small"
           variant="outlined"
           size="small"
         />
     <TextField
           label="Password"
+          name="password"
+          onChange={changeHandlerLogIn}
           id="outlined-size-small"
           variant="outlined"
           size="small"
         />
     </Grid>
     <Grid>
-    <Button variant="contained" color="primary" size="small">Log-in</Button>
+    <Button type="submit" variant="contained" color="primary" size="small">Log-in</Button>
     </Grid>
     <h2>Get typing...</h2>
 
