@@ -4,7 +4,7 @@ export const theme = createMuiTheme({
   root: {
     flexGrow: 1,
   },
-  spacing: '2%',
+  spacing: 10,
   palette: {
         type: 'light',
         primary: {
@@ -15,5 +15,4 @@ export const theme = createMuiTheme({
         },
       
     },
-
 });
