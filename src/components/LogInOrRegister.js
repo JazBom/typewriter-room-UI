@@ -46,7 +46,7 @@ const LogInOrRegister = (props) => {
         logIn(logInForm)
         .then((response) => {
             if(response.token) {
-                history.replace('/userhome');
+                history.replace('/home');
             }
         })
     }

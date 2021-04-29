@@ -6,19 +6,17 @@ import { LogIn } from './LogInOrRegister';
 import { TextCard } from './TextCard';
 
 
-const UserHome = (props) => {
+const Home = (props) => {
     return (
-    <div className="container">
-      <Nav/> 
       <Grid container spacing={1}>
+        
         {/* <Grid className="hamburger list" item xs={3} sm={3} lg={3}>
           something here
         </Grid> */}
         <TextCard/>
       </Grid> 
-    </div>
 )
 };
 
-export { UserHome };
+export { Home };
 

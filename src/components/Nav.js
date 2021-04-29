@@ -5,12 +5,12 @@ import { Breadcrumbs, Link } from '@material-ui/core';
 // import { Route, MemoryRouter } from 'react-router';
 // import PropTypes from 'prop-types';
 
-export const Nav = (props) => {
+export const Nav = () => {
 
 return (
 <>
 <Breadcrumbs aria-label="breadcrumb">
-<Link color="inherit" href="/userhome">
+<Link color="inherit" href="/home">
     Home
   </Link>
 <Link color="inherit" href="/allpages">
@@ -18,9 +18,6 @@ return (
   </Link>
   <Link color="inherit" href="/allpages/publishedpages">
     PublishedPages
-  </Link>
-  <Link color="inherit" href="/allpages/textcard">
-    TextCard
   </Link>
   <Link color="inherit" href="/allpages/mypages">
     MyPages
