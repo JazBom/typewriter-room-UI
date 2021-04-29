@@ -5,6 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { getAllTextItems } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,37 +41,10 @@ const TextCard = () => {
     const [pagesArray, setPagesArray] = useState([]);
   
     useEffect(() => {
-    
-    fetch('http://localhost:9000/api/text_items', {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
-    })
-    .then((response) => {
-        console.log("GET text item response", response);
-        return response.json();
-    }).then((textItemData) => {
-      // where published = true
-        console.log("GET text item data", textItemData);
-        setPagesArray(textItemData);
-    });
-
-    fetch('http://localhost:9000/api/users', {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
-    })
-    .then((response) => {
-        console.log("GET users response", response);
-        return response.json();
-    })
-    .then((users) => {
-        console.log("GET user data", users);
-        setWriterArray(users);
-    });    
-  }, []);
+        getAllTextItems().then((allTextItems) => {
+          setPagesArray(allTextItems);
+        })
+      }, []);
 
 
 const textCard = pagesArray.map((el) => {
