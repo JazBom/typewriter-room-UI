@@ -10,13 +10,19 @@ export const Nav = (props) => {
 return (
 <>
 <Breadcrumbs aria-label="breadcrumb">
-<Link color="inherit" href="/home">
+<Link color="inherit" href="/userhome">
     Home
   </Link>
 <Link color="inherit" href="/allpages">
     AllPages
   </Link>
-  <Link color="inherit" href="/mypages/">
+  <Link color="inherit" href="/allpages/publishedpages">
+    PublishedPages
+  </Link>
+  <Link color="inherit" href="/allpages/textcard">
+    TextCard
+  </Link>
+  <Link color="inherit" href="/allpages/mypages">
     MyPages
   </Link>
   <Link color="inherit" href="/">
