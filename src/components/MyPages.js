@@ -30,24 +30,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MyPages = () => {
-  const classes = useStyles();  
+  const classes = useStyles();
   const [myPagesArray, setMyPagesArray] = useState([]);
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
   setExpanded(!expanded);
-};
+  };
 
   useEffect(() => {
-
-    getMyTextItems().then((myPagesArray) => {
-      setMyPagesArray(myPagesArray);
-    })
+    getMyTextItems()
+    .then((data) => {
+      setMyPagesArray(data);
+    });
   }, []);
-  
   
 const myTextCard = myPagesArray.map((el) => {
   return (
-      <Card key={el.id} published={el.published} className={classes.root}>
+      <Card key={el.id} className={classes.root}>
     <CardHeader
       avatar={
         <Avatar aria-label="writer avatar" className={classes.avatar}>
@@ -73,7 +72,7 @@ const myTextCard = myPagesArray.map((el) => {
       </Typography>
     </CardContent>
     <CardActions disableSpacing>
-      <IconButton aria-label="add to favorites">
+      <IconButton aria-label="rate">
         <StarBorderIcon />
         {/* make this a rating icon button */}
       </IconButton>
@@ -97,14 +96,20 @@ const myTextCard = myPagesArray.map((el) => {
     </Collapse>
   </Card>
    
-  )
-})
-    return(
-      <Grid className="text-item-card" classes={classes} item xs={12} sm={6} lg={3}>
-          {myTextCard}
+ )
+ });
+ 
+ return (
+<div>
+<h2>My Pages</h2>
+<Grid container spacing={1}>
+      <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
+        {myTextCard}
       </Grid>
-)
-};
+</Grid>
+</div>
+      )
+}
 
 export { MyPages };
 
