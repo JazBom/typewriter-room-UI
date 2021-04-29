@@ -1,76 +1,112 @@
 import React, { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-import { makeStyles } from '@material-ui/core/styles';
-import { Button, Card, Grid, Icon, Paper} from "@material-ui/core";
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Grid, IconButton, makeStyles, Paper} from "@material-ui/core";
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
-import ButtonBase from '@material-ui/core/ButtonBase';
 import { getPublishedTextItems } from '../api/capstone-server'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    maxWidth: 345,
   },
-  paper: {
-    padding: theme.spacing(2),
-    margin: 'auto',
-    maxWidth: 500,
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
   },
-  image: {
-    width: 128,
-    height: 128,
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
   },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: [500],
   },
 }));
 
- // function to put textitem data in 'published page', then render many published pages? 
- // then just put 'published pages' tag in AllPages?? Do I even need AllPages?
-
 const PublishedPages = () => {
   const classes = useStyles();  
-  const [writerArray, setWriterArray] = useState([]);
   const [publishedPagesArray, setPublishedPagesArray] = useState([]);
+  const [expanded, setExpanded] = React.useState(false);
+  const handleExpandClick = () => {
+  setExpanded(!expanded);
+  };
 
   useEffect(() => {
-
-    getPublishedTextItems().then((publishedItems) => {
-      setPublishedPagesArray(publishedItems);
+    getPublishedTextItems().then((data) => {
+      setPublishedPagesArray(data);
     })
   }, []);
 
-const publishedPages = publishedPagesArray.filter((el) => el.published === true).map((el) => {
-  return (<div>
-    <h3>name of text</h3>
-    <ul className={el.inspiration_id}>
-      { publishedPagesArray.filter((el) => el.published === true).map((el) => {
-          return (
-            <li
-              key={el.id}
-              className={el.inspiration_id}
-              writer={el.writer_id}
-              ratings={el.ratings[1].rating}
-              // onClick={rating}
-            >
-              {el.text}
-            </li>
-          );
-      })}
-    </ul>
-  </div>
-);
-})
+const publishedPages = publishedPagesArray.map((el) => {
+    return (
+        <Card key={el.id} className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="writer avatar" className={classes.avatar}>
+            {el.writer.name}
+          </Avatar>
+        }
+        action={
+          <IconButton aria-label="settings">
+            <MoreVertIcon />
+          </IconButton>
+        }
+        title="name of text"
+        subheader={`by ${el.writer.name}`}
+      />
+      <CardMedia
+        className={classes.media}
+        image={el.inspiration.imageUrl}
+        title={el.inspiration.imageOf}
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {el.inspiration.sentenceOf}: {el.inspiration.sentence}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <IconButton aria-label="rate">
+          <StarBorderIcon />
+          {/* make this a rating icon button */}
+        </IconButton>
+        <IconButton
+        //   className={clsx(classes.expand, {
+        //     [classes.expandOpen]: expanded,
+        //   })} --> doesn't recognise 'clsx'
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </IconButton>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <Typography paragraph>
+          {el.text}
+          </Typography>
+        </CardContent>
+      </Collapse>
+    </Card>
+     
+   )
+   });
+   
     return(
-      <div className="published-pages" classes={classes}>
-         <div>
-      <h2>Published Pages</h2>
+      <div>
+         <h2>Published Pages</h2>
+      <Grid container spacing={1}>
+      <Grid className="published-pages" item xs={12} sm={6} lg={3}>
       {publishedPages}
-    </div>
- 
-    </div>
+      </Grid>
+      </Grid>
+      </div>
 )
 };
 
