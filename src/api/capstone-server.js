@@ -1,10 +1,10 @@
 const baseApiUrl = 'http://localhost:9000/api'
 
-const Get = {
+const get = {
     method: "GET",
     headers: {
         "Content-Type": "application/json",
-        "token": window.localStorage.getItem('token')
+        "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
     },
   };
 
@@ -19,7 +19,7 @@ const logIn = (form) => {
         })
         .then(response => response.json())
         .then(data => {
-            window.localStorage.setItem('token', data.token);
+            window.localStorage.setItem('APItoken', data.token);
             resolve(data);
         })
         .catch((error) => {
@@ -30,12 +30,12 @@ const logIn = (form) => {
 
 const getMyTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items/my_items`, Get)
+        fetch(`${baseApiUrl}/text_items/my_items`, get)
           .then((response) => {
               console.log("GET my text item response", response);
               return response.json();
           }).then((myTextItemData) => {
-              console.log("GET published text item data", myTextItemData);
+              console.log("GET my text item data", myTextItemData);
               resolve(myTextItemData);
           })
           .catch((error) => {
@@ -46,7 +46,7 @@ const getMyTextItems = () => {
 
 const getPublishedTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items/published`, Get)
+        fetch(`${baseApiUrl}/text_items/published`, get)
           .then((response) => {
               console.log("GET published text item response", response);
               return response.json();
@@ -62,7 +62,7 @@ const getPublishedTextItems = () => {
 
 const getAllTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items`, Get)
+        fetch(`${baseApiUrl}/text_items`, get)
         .then((response) => {
             console.log("GET text item response", response);
             return response.json();
