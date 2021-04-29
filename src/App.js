@@ -13,6 +13,10 @@ import { UserHome } from './components/UserHome';
 import { Footer } from './components/Footer';
 import { AllPages } from './components/AllPages';
 import { MyPages } from './components/MyPages';
+import { PublishedPages } from './components/PublishedPages';
+import { TextCard } from './components/TextCard';
+
+
 
 const App = () => {
  
@@ -24,10 +28,10 @@ const App = () => {
       <Switch>
 
           <Route exact path="/">
-            <LogInOrRegister/>
+            <LogInOrRegister theme={theme}/>
           </Route>
 
-          <Route exact path="/user-home">
+          <Route exact path="/userhome">
             <UserHome/>
           </Route>
 
@@ -35,7 +39,15 @@ const App = () => {
             <AllPages/>
           </Route>
           
-          <Route exact path="/mypages">
+          <Route exact path="/allpages/publishedpages">
+            <PublishedPages/>
+          </Route>
+
+          <Route exact path="/allpages/textcard">
+            <TextCard/>
+          </Route>
+
+          <Route exact path="/allpages/mypages">
             <MyPages/>
           </Route>
 
