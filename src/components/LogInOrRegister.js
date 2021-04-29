@@ -1,12 +1,12 @@
 import React from "react";
 import { Button, TextField, Grid, makeStyles } from '@material-ui/core';
 
-const LogInOrRegister = () => {
+const LogInOrRegister = (props) => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
-        margin: theme.spacing(1),
+        margin: theme.spacing(10),
         width: 200,
       },
     },
@@ -20,8 +20,8 @@ const LogInOrRegister = () => {
     direction="column"
     justify="space-evenly"
     alignItems="center"
-    margin={classes.root}
-    spacing={0}
+    // margin={classes.root}
+    // spacing={props.theme.spacing(20)}
   >
   
   <Grid item xs={12} sm={12} lg={12}>
