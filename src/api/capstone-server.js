@@ -28,6 +28,22 @@ const logIn = (form) => {
     })
 };
 
+const getMyTextItems = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/text_items/my_items`, Get)
+          .then((response) => {
+              console.log("GET my text item response", response);
+              return response.json();
+          }).then((myTextItemData) => {
+              console.log("GET published text item data", myTextItemData);
+              resolve(myTextItemData);
+          })
+          .catch((error) => {
+              reject(error);
+          });  
+    });
+}; 
+
 const getPublishedTextItems = () => {
     return new Promise((resolve, reject) => {
         fetch(`${baseApiUrl}/text_items/published`, Get)
@@ -60,5 +76,5 @@ const getAllTextItems = () => {
     });
 };
 
-export { getPublishedTextItems, getAllTextItems, logIn };
+export { getMyTextItems, getPublishedTextItems, getAllTextItems, logIn };
 
