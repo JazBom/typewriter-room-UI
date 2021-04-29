@@ -100,12 +100,12 @@ const textCard = pagesArray.map((el) => {
     </Card>
      
     )
-})
+    })
       return(
         <Grid className="text-item-card" classes={classes} item xs={12} sm={6} lg={3}>
             {textCard}
         </Grid>
-)
+        )
 };
 
 export { TextCard };
