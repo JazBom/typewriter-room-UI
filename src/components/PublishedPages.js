@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card, Grid, Icon, Paper} from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import { getPublishedTextItems } from '../api/capstone-server'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,36 +36,10 @@ const PublishedPages = () => {
   const [publishedPagesArray, setPublishedPagesArray] = useState([]);
 
   useEffect(() => {
-    
-    fetch('http://localhost:9000/api/text_items', {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
-    })
-    .then((response) => {
-        console.log("GET text item response", response);
-        return response.json();
-    }).then((textItemData) => {
-      // where published = true
-        console.log("GET text item data", textItemData);
-        setPublishedPagesArray(textItemData);
-    });
 
-    fetch('http://localhost:9000/api/users', {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json"
-      },
+    getPublishedTextItems().then((publishedItems) => {
+      setPublishedPagesArray(publishedItems);
     })
-    .then((response) => {
-        console.log("GET users response", response);
-        return response.json();
-    })
-    .then((users) => {
-        console.log("GET user data", users);
-        setWriterArray(users);
-    });    
   }, []);
 
 const publishedPages = publishedPagesArray.filter((el) => el.published === true).map((el) => {
