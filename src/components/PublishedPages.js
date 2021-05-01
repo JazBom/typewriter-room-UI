@@ -1,113 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Grid, IconButton, makeStyles, Paper} from "@material-ui/core";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Typography from '@material-ui/core/Typography';
+import { Grid } from "@material-ui/core";
 import { getPublishedTextItems } from '../api/capstone-server'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: [500],
-  },
-}));
+import { TextCard } from "./TextCard";
 
 const PublishedPages = () => {
-  const classes = useStyles();  
   const [publishedPagesArray, setPublishedPagesArray] = useState([]);
-  const [expanded, setExpanded] = React.useState(false);
-  const handleExpandClick = () => {
-  setExpanded(!expanded);
-  };
-
   useEffect(() => {
     getPublishedTextItems().then((data) => {
       setPublishedPagesArray(data);
     })
   }, []);
-
-const publishedPages = publishedPagesArray.map((el) => {
-    return (
-        <Card key={el.id} className={classes.root}>
-      <CardHeader
-        avatar={
-          <Avatar aria-label="writer avatar" className={classes.avatar}>
-            {el.writer.name}
-          </Avatar>
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="name of text"
-        subheader={`by ${el.writer.name}`}
-      />
-      <CardMedia
-        className={classes.media}
-        image={el.inspiration.imageUrl}
-        title={el.inspiration.imageOf}
-      />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {el.inspiration.sentenceOf}: {el.inspiration.sentence}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton aria-label="rate">
-          <StarBorderIcon />
-          {/* make this a rating icon button */}
-        </IconButton>
-        <IconButton
-        //   className={clsx(classes.expand, {
-        //     [classes.expandOpen]: expanded,
-        //   })} --> doesn't recognise 'clsx'
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>
-          {el.text}
-          </Typography>
-        </CardContent>
-      </Collapse>
-    </Card>
-     
-   )
-   });
    
     return(
       <div>
          <h2>Published Pages</h2>
       <Grid container spacing={1}>
-      <Grid className="published-pages" item xs={12} sm={6} lg={3}>
-      {publishedPages}
-      </Grid>
+        <Grid className="published-pages" item xs={12} sm={6} lg={3}>
+        <TextCard array={publishedPagesArray}/>
+        </Grid>
       </Grid>
       </div>
-)
+      )
 };
 
 export { PublishedPages };

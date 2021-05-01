@@ -5,7 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import { getAllTextItems } from '../api/capstone-server';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,23 +31,14 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const TextCard = () => {
+const TextCard = (props) => {
     const classes = useStyles();  
     const [expanded, setExpanded] = React.useState(false);
     const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-    const [writerArray, setWriterArray] = useState([]);
-    const [pagesArray, setPagesArray] = useState([]);
-  
-    useEffect(() => {
-        getAllTextItems().then((allTextItems) => {
-          setPagesArray(allTextItems);
-        })
-      }, []);
-
-
-const textCard = pagesArray.map((el) => {
+   
+const textCard = props.array.map((el) => {
     return (
         <Card key={el.id} published={el.published} className={classes.root}>
       <CardHeader
