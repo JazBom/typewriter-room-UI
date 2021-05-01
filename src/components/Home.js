@@ -13,7 +13,7 @@ const Home = (props) => {
         {/* <Grid className="hamburger list" item xs={3} sm={3} lg={3}>
           something here
         </Grid> */}
-        <TextCard/>
+        {/* <TextCard/> */}
       </Grid> 
 )
 };
