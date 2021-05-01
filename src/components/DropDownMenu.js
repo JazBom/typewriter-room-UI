@@ -61,7 +61,7 @@ const DropDownMenu = (props) => {
         <Route>
 
           { ({ location }) => {
-           //what does this do?
+           //what does this do? what is the x, is it equivalent of 'el'? ie. if there is a valid element, then return that?
             const pathnames = location.pathname.split('/').filter((x) => x);
 
             return (

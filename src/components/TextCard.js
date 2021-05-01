@@ -6,14 +6,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
     },
     media: {
       height: 0,
-      paddingTop: '56.25%', // 16:9
+      paddingTop: '56.25%', 
     },
     expand: {
       transform: 'rotate(0deg)',

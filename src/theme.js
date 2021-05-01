@@ -2,7 +2,7 @@ import { createMuiTheme }  from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({  
   root: {
-    flexGrow: 1,
+    flexGrow: 3,
   },
   spacing: 10,
   palette: {
