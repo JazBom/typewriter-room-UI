@@ -18,6 +18,7 @@ import { PublishedPages } from './components/PublishedPages';
 import { TextCard } from './components/TextCard';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { ProtectedLayout } from "./components/ProtectedLayout";
+import { NewTextItemForm } from "./components/NewTextItemForm";
 
 
 const App = () => {
@@ -41,6 +42,10 @@ const App = () => {
           path="/allpages/publishedpages"
           component={PublishedPages}/>
           
+          <ProtectedRoute 
+          path="/allpages/mypages/new"
+          component={NewTextItemForm}/>
+
           <ProtectedRoute 
           path="/allpages/mypages"
           component={MyPages}/>

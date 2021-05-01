@@ -22,6 +22,9 @@ return (
   <Link color="inherit" href="/allpages/mypages">
     MyPages
   </Link>
+  <Link color="inherit" href="/allpages/mypages/new">
+    New
+  </Link>
   <Link color="inherit" href="/">
     Logout
 </Link>
