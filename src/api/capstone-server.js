@@ -1,5 +1,53 @@
 const baseApiUrl = 'http://localhost:9000/api'
 
+// post requests
+const post = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
+      },
+    }
+
+const postInspoItem = (newInspoItem) => {
+        
+    return new Promise((resolve, reject) => {
+            fetch(`${baseApiUrl}/inspirations`, {...post, body: JSON.stringify(newInspoItem)})
+            .then((response) => {
+                console.log(response.status);
+                console.log("POST inspo item response", response);
+                return response.json();
+              })
+              .then((createdInspoItem) => {
+                console.log("POST inspo item data", createdInspoItem);
+                  resolve(createdInspoItem);
+              })
+              .catch((error) => {
+                reject(error);
+              });
+        })
+    }
+
+const postTextItem = (newTextItem, newInspoItem) => {
+    const newItem = { textItem: {...newTextItem}, inspoItem: {...newInspoItem} };
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/text_items`, {...post, body: JSON.stringify(newItem)})
+        .then((response) => {
+            console.log(response.status);
+            console.log("POST text item response", response);
+            return response.json();
+          })
+          .then((createdTextItem) => {
+            console.log("POST my text item data", createdTextItem);
+              resolve(createdTextItem);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+    })
+}
+
+//get requests
 const get = {
     method: "GET",
     headers: {
@@ -92,5 +140,8 @@ const getAllInspoItems = () => {
     });
 };
 
-export { getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn };
+
+
+
+export { postInspoItem, postTextItem, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn };
 
