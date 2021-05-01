@@ -76,5 +76,21 @@ const getAllTextItems = () => {
     });
 };
 
-export { getMyTextItems, getPublishedTextItems, getAllTextItems, logIn };
+const getAllInspoItems = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/inspirations`, get)
+        .then((response) => {
+            console.log("GET inspo item response", response);
+            return response.json();
+        }).then((inspoItemData) => {
+            console.log("GET inspo item data", inspoItemData);
+            resolve(inspoItemData);
+        })
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
+export { getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn };
 
