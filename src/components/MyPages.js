@@ -14,16 +14,8 @@ const MyPages = () => {
   }, []);
 
  return (
-    <div>
-    <Grid container spacing={1}>
-          <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
-            
-          </Grid>
-          <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
-            <TextCard array={myPagesArray} />
-          </Grid>
-          
-    </Grid>
+    <div>   
+    <TextCard array={myPagesArray} />
     </div>
       )
 }
