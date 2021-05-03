@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { uniq } from "lodash";
 // import { useHistory} from "react-router";
-import { Button, TextField, FormHelperText, FormControl, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
+import { Button, Box, TextField, FormHelperText, FormControl, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
 import { postInspoItem, postTextItem, getAllInspoItems } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(10),
-      width: 200,
+    display: 'flex',
+    flexDirection: 'column'
     },
-    formControl: {
+  formControl: {
       margin: theme.spacing(1),
-      minWidth: 400,
-      maxWidth: 600,
+      width: 300,
+      // minWidth: 310,
+      // maxWidth: 600,
     },
-    selectEmpty: {
+  selectEmpty: {
       marginTop: theme.spacing(1),
     },
-  },
+  
 }));
 
 const NewTextItemForm = (props) => {
@@ -28,6 +28,7 @@ const NewTextItemForm = (props) => {
   const [masterArray, setMasterArray] = useState([]);
 
   const [inspoItem, setInspoItem] = useState({
+      id: 0,
       sentence: '',
       sentenceOf: '',
       imageUrl: '',
@@ -43,6 +44,10 @@ const NewTextItemForm = (props) => {
         sentence: ''
         })
 
+  const [selectedImageOf, setSelectedImageOf] = useState({
+          imageOf: ''
+          })
+
   const [selectedImage, setSelectedImage] = useState({
         imageOf: '',
         imageUrl: ''
@@ -56,16 +61,22 @@ const NewTextItemForm = (props) => {
 
   const [sentenceOfDropDownArray, setSentenceOfDropDownArray] = useState([]);
   const [sentenceDropDownArray, setSentenceDropDownArray] = useState([]);
+  const [imageOfDropDownArray, setImageOfDropDownArray] = useState([]);
   const [imageDropDownArray, setImageDropDownArray] = useState([]);
 
 
+
   useEffect(() => {
+
     getAllInspoItems()
     .then((data) => {
       console.log(data);
       setMasterArray(data);
       setSentenceOfDropDownArray(uniq(data.map(el => el.sentenceOf)));
-      setImageDropDownArray(uniq(data.map(el => el)));
+      setImageOfDropDownArray(uniq(data.map((el) => el.imageOf)));
+      // console.log(imageDropDownArray);
+      // const uniqueImageDropDownArray = [...imageDropDownArray]
+      
     });
   }, []);
 
@@ -93,35 +104,34 @@ const handleSelectSentence = (e) => {
           })
         };
 
+  const handleSelectImageOf = (e) => {
+    setSelectedImageOf({
+      imageOf: e.target.value,
+    });
+    const newImageDropDownArray = uniq(masterArray.filter((el) => el.imageOf === e.target.value).map(el => el.imageUrl));
+    console.log(newImageDropDownArray);
+    setImageDropDownArray(newImageDropDownArray);
+    setInspoItem({
+      ...inspoItem,
+      imageOf: e.target.value,
+    })
+  }
+
   const handleSelectImage = (e) => {
-    const image = [...e.target.childNodes].find(el => el.value === e.target.value);
-    const imageOf = image.text;
-    const imageUrl = e.target.value;
-          setSelectedImage({
-            ...selectedImage,
-            imageUrl,
-            imageOf
-          });
-          setInspoItem({
-            ...inspoItem,
-            imageUrl,
-            imageOf
-          })
-        };
+    setSelectedImage({
+      imageUrl: e.target.value
+    });
+    setInspoItem({
+      ...inspoItem,
+      imageUrl: e.target.value
+    })
+  };
 
-  // const handleChangeInspoItem = (e) => {
-  //         const name = e.target.name;
-  //         setInspoItem({
-  //           ...inspoItem,
-  //           [name]: e.target.value,
-  //         });
-  //       };
-
-  const changeHandlerTextItem = (e) => {
-        const newTextItemState = {...textItem};
-        newTextItemState[e.target.name] = e.target.value;
-        console.log(newTextItemState);
-        setTextItem(newTextItemState);
+const changeHandlerTextItem = (e) => {
+    const newTextItemState = {...textItem};
+      newTextItemState[e.target.name] = e.target.value;
+      console.log(newTextItemState);
+      setTextItem(newTextItemState);
     }
 
   const handleSaveInspoItem = () => {
@@ -129,6 +139,7 @@ const handleSelectSentence = (e) => {
     .then(() => {
       setInspoItem(
           {
+          id: 0,
           sentence: '',
           sentenceOf: '',
           imageUrl: '',
@@ -136,11 +147,13 @@ const handleSelectSentence = (e) => {
           });
     })
   }
-    const handleSaveTextItem = () => {
+  
+  const handleSaveTextItem = () => {
       postTextItem(textItem, inspoItem)
       .then(() => {
         setInspoItem(
             {
+            id: 0,
             sentence: '',
             sentenceOf: '',
             imageUrl: '',
@@ -162,6 +175,7 @@ const handleSelectSentence = (e) => {
     .then(() => {
       setInspoItem(
         {
+        id: 0,
         sentence: '',
         sentenceOf: '',
         imageUrl: '',
@@ -179,22 +193,14 @@ const handleSelectSentence = (e) => {
 
   return (
 
-          <Grid
-          container
-          display="flex"
-          direction="column"
-          justify="space-evenly"
-          alignItems="center"
-          // margin={classes.root}
-          // spacing={props.theme.spacing(20)}
-          >
+          <Box container className={classes.root}>
     
-                    <Grid item xs={12} sm={12} lg={12} >
+                    <Box item xs={12} sm={12} lg={12} >
                       <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
-                    </Grid>
+                    </Box>
                     
                     <Button type="button" variant="contained" color="primary" size="small" onClick={handleSaveInspoItem}>Save Inspo</Button>
-                    <Grid item xs={12} sm={12} lg={12}>     
+                    <Box item xs={12} sm={12} lg={12}>     
                         <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="sentenceOf-native-helper">Who said it?</InputLabel>
                               <NativeSelect
@@ -213,11 +219,11 @@ const handleSelectSentence = (e) => {
                                 
                               </NativeSelect>
                               </FormControl>
-                              </Grid>
+                      </Box>
         
 
-                    <Grid item xs={12} sm={12} lg={12}>  
-                              <FormControl className={classes.formControl}>
+                    <Box item xs={12} sm={12} lg={12}>  
+                        <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="sentence-native-helper">What did they say?</InputLabel>
                               <NativeSelect
                               value={selectedSentence.sentence}
@@ -235,10 +241,32 @@ const handleSelectSentence = (e) => {
                                       
                               </NativeSelect>
                               </FormControl>
-                              </Grid>
+                      </Box>
         
 
-        <Grid item xs={12} sm={12} lg={12}>  
+                    <Box item xs={12} sm={12} lg={12}>  
+                              <FormControl className={classes.formControl}>
+                              <InputLabel htmlFor="imageOf-native-helper">ImageOf</InputLabel>
+                              <NativeSelect
+                              value={selectedImageOf.imageOf}
+                              onChange={handleSelectImageOf}
+                              inputProps={{
+                                name: 'imageOf',
+                                id: 'imageOf-native-helper',
+                              }}>
+                                <option aria-label="None" value="" />
+                                {imageOfDropDownArray.map((el) => {
+                                        return (
+                                          <option value={el}>
+                                            {el}</option>
+                                          )
+                                          })}
+                              </NativeSelect>
+                              {/* <img id="selectedImageOf" src={selectedImage.imageUrl}/> */}
+                              </FormControl>
+                              
+                    </Box>    
+                    <Box item xs={12} sm={12} lg={12}>  
                               <FormControl className={classes.formControl}>
                               <InputLabel htmlFor="image-native-helper">Image</InputLabel>
                               <NativeSelect
@@ -251,16 +279,17 @@ const handleSelectSentence = (e) => {
                                 <option aria-label="None" value="" />
                                 {imageDropDownArray.map((el) => {
                                         return (
-                                          <option value={el.imageUrl}>{el.imageOf}</option>
+                                          <option value={el}>
+                                            {el}</option>
                                           )
                                           })}
                               </NativeSelect>
                               <img id="selectedImage" src={selectedImage.imageUrl}/>
                               </FormControl>
                               
-                    </Grid>     
+                    </Box>  
 
-                    <Grid item xs={12} sm={12} lg={12}>
+                    <Box item xs={12} sm={12} lg={12}>
                     <FormControl className={classes.formControl}><h2>New Text Item</h2>
                                           
                                               <TextField
@@ -280,12 +309,13 @@ const handleSelectSentence = (e) => {
                                                 variant="outlined"
                                                 size="small"
                                               />
-                                        
-                                          <Button type="submit" variant="contained" color="primary" size="small" onSubmit={handleSaveTextItem}>Save</Button>
-                                          <Button variant="contained" color="primary" size="small" onSubmit={handlePublishTextItem}>Save and Publish!</Button>
-                      </FormControl>  
-                      </Grid>     
-          </Grid>
+                          </FormControl>  
+                      </Box> 
+                      <Box item className={classes.formControl} justifyContent='right' xs={12} sm={12} md={6} lg={6}>              
+                      <Button type="submit" variant="contained" color="primary" size="small" onClick={handleSaveTextItem}>Save</Button>
+                      <Button variant="contained" color="primary" size="small" onSubmit={handlePublishTextItem}>Save and Publish!</Button>
+                      </Box>  
+          </Box>
     
   )
 };
