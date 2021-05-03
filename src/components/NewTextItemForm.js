@@ -4,24 +4,25 @@ import { uniq } from "lodash";
 import { Button, TextField, FormHelperText, FormControl, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
 import { postInspoItem, postTextItem, getAllInspoItems } from '../api/capstone-server';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(10),
+      width: 200,
+    },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 400,
+      maxWidth: 600,
+    },
+    selectEmpty: {
+      marginTop: theme.spacing(1),
+    },
+  },
+}));
+
 const NewTextItemForm = (props) => {
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(10),
-        width: 200,
-      },
-      formControl: {
-        margin: theme.spacing(1),
-        minWidth: 400,
-        maxWidth: 600,
-      },
-      selectEmpty: {
-        marginTop: theme.spacing(1),
-      },
-    },
-  }));
   const classes = useStyles();
 
   const [masterArray, setMasterArray] = useState([]);

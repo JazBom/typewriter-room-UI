@@ -3,16 +3,18 @@ import { useHistory } from "react-router";
 import { Button, TextField, Grid, makeStyles } from '@material-ui/core';
 import { logIn } from '../api/capstone-server';
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& .MuiTextField-root': {
+      margin: theme.spacing(10),
+      width: 200,
+    },
+  },
+}));
+
 const LogInOrRegister = (props) => {
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      '& .MuiTextField-root': {
-        margin: theme.spacing(10),
-        width: 200,
-      },
-    },
-  }));
+  
   const classes = useStyles();
 
   const history = useHistory();
@@ -54,15 +56,11 @@ const LogInOrRegister = (props) => {
   return (
     <Grid
     container
-    display="flex"
-    direction="column"
-    justify="space-evenly"
-    alignItems="center"
-    // margin={classes.root}
+    className={classes.root}
     // spacing={props.theme.spacing(20)}
   >
   
-  <Grid item xs={12} sm={12} lg={12}>
+  <Grid className={classes.root}>
   <form className="register">
     <h2>New to the Typewriter Room?</h2>
     <Grid>
