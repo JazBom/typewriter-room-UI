@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -22,6 +22,16 @@ import { NewTextItemForm } from "./components/NewTextItemForm";
 
 
 const App = () => {
+
+  // const [isLoggedIn, setLoggedIn] = useState(false);
+
+  // const onLogin = () => {
+  //   setLoggedIn(true);
+  // }
+
+  // const onLogout = () => {
+  //   setLoggedIn(false);
+  // }
  
   return (
     <Router>
@@ -36,23 +46,28 @@ const App = () => {
 
           <ProtectedRoute 
           path="/home"
-          component={Home}/>
+          component={Home}
+          pageTitle="The Typewriter Room"/>
 
           <ProtectedRoute 
           path="/allpages/publishedpages"
-          component={PublishedPages}/>
-          
+          component={PublishedPages}
+          pageTitle="Published Pages"/>
+
           <ProtectedRoute 
           path="/allpages/mypages/new"
-          component={NewTextItemForm}/>
+          component={NewTextItemForm}
+          pageTitle="New Text Item"/>
 
           <ProtectedRoute 
           path="/allpages/mypages"
-          component={MyPages}/>
+          component={MyPages}
+          pageTitle="My Pages"/>
 
           <ProtectedRoute 
           path="/allpages"
-          component={AllPages}/>
+          component={AllPages}
+          pageTitle="All Pages"/>
 
         </Switch>
 
