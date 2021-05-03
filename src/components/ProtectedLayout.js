@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { flexbox } from '@material-ui/system'
+import { flexbox, spacing } from '@material-ui/system'
 import { Box, makeStyles } from "@material-ui/core";
 import { SideBar, sideBarWidth } from './SideBar';
 import { TopBar } from './TopBar';
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         drawHeader: {
         display: 'flex',
         alignItems: 'center',
-        padding: theme.spacing(0, 1),
+        padding: theme.spacing(1, 0),
         ...theme.mixins.toolbar,
         justifyContent: 'flex-end',
         },
@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         position: 'relative',
         top: '100px',
+        // left: '100px',
         flexGrow: 1,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {
@@ -26,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
         marginLeft: -sideBarWidth,
+        // write media query to make marginLeft 0 for xs - s
         zIndex: 100
         },
         contentShift: {
@@ -53,7 +55,7 @@ const ProtectedLayout = ({ component: Comp, pageTitle, logOut, ...rest }) => {
         <div className={classes.root}>
         <TopBar pageTitle={pageTitle} sideBarOpen={sideBarOpen} onOpenSideBarClick={handleSideBarOpen}/>
         <SideBar sideBarOpen={sideBarOpen} onCloseSideBarClick={handleSideBarClose} logOut={logOut}/>
-        <Box className={classes.content} flexDirection="row" flexWrap="wrap" alignItems="center" alignContent="flex-start" justifyContent="center">
+        <Box className={classes.content} flexDirection="row" flexWrap="wrap" justifyContent='center'>
             <Comp {...rest} />
         </Box>
         </div>
