@@ -1,10 +1,15 @@
 import { React, useState } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import { Breadcrumbs, Button, List, Link, ListItem, ListItemText, Collapse, makeStyles, Typography } from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { Route, MemoryRouter } from 'react-router';
-import { Link as RouterLink, RouterLink } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { App } from '../App';
+import { Home } from './Home';
+import { AllPages } from './AllPages';
+import { MyPages } from './MyPages';
+import { PublishedPages } from './PublishedPages';
+import { NewTextItemForm } from "./NewTextItemForm";
 
 const DropDownMenu = (props) => {
     // why does RouterLink need to be imported and identified as components in Link
@@ -23,18 +28,18 @@ const DropDownMenu = (props) => {
     '/mypages/indraft': 'InDraft',
     '/mypages/published': 'Published',
     '/mypages/new': 'New',
-    '/': 'logout',
+    '/': 'Logout',
     };
 
-    // const useStyles = makeStyles(props.theme) 
-    // const classes = useStyles(); // do I need this, 
-    //or can I just use useStyles.nested in the ListItemLink tag?
+    const useStyles = makeStyles(props.theme) 
+    const classes = useStyles(); // do I need this, 
+    
     const [open, setOpen] = useState(true);
-    //how to link to ListItemLink.propTypes below?
+    
     const handleClick = () => {
       setOpen((prevOpen) => !prevOpen);
     };
-    // again, what are the props ListItemLink has and can I access this another way?
+   
     const ListItemLink = (props) => {
         const { to, open, ...other } = props;
         const primary = navMap[to];
