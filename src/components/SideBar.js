@@ -55,7 +55,7 @@ const SideBar = (props) => {
             <Divider />
             <List>
                 <ListItem button component={RouterLink} to="/home" key="Home">
-                    <ListItemText/>
+                    <ListItemText primary="Home"/>
                 </ListItem>
                 <ListItem button component={RouterLink} to="/allpages" key="AllPages">
                     <ListItemText primary="AllPages"/>
@@ -64,7 +64,7 @@ const SideBar = (props) => {
                 </ListItem><ListItem button component={RouterLink} to="/allpages/publishedpages" key="PublishedPages">
                     <ListItemText primary="PublishedPages"/>
                     <Divider />
-                </ListItem><ListItem button key="Logout">
+                </ListItem><ListItem button component={RouterLink} onClick={props.logOut} to="/" key="Logout">
                     <ListItemText primary="Logout"/>
                 </ListItem>
             </List>

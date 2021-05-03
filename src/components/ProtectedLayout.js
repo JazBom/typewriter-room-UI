@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { flexbox } from '@material-ui/system'
+import { Box, makeStyles } from "@material-ui/core";
 import { SideBar, sideBarWidth } from './SideBar';
 import { TopBar } from './TopBar';
 
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     }
 ));
 
-const ProtectedLayout = ({ component: Comp, pageTitle, ...rest }) => {
+const ProtectedLayout = ({ component: Comp, pageTitle, logOut, ...rest }) => {
 
     const classes = useStyles();
     const [sideBarOpen, setSideBarOpen] = useState(true);
@@ -49,10 +50,10 @@ const ProtectedLayout = ({ component: Comp, pageTitle, ...rest }) => {
     return (
         <div className={classes.root}>
         <TopBar pageTitle={pageTitle} sideBarOpen={sideBarOpen} onOpenSideBarClick={handleSideBarOpen}/>
-        <SideBar sideBarOpen={sideBarOpen} onCloseSideBarClick={handleSideBarClose}/>
-        <main className={classes.content}>
+        <SideBar sideBarOpen={sideBarOpen} onCloseSideBarClick={handleSideBarClose} logOut={logOut}/>
+        <Box className={classes.content} display={classes.root.display} flexDirection="row" flexWrap="wrap" alignItems="center" alignContent="flex-start" justifyContent="center">
             <Comp {...rest} />
-        </main>
+        </Box>
         </div>
     )
 };
