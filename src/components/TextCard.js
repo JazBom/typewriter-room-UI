@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Grid, IconButton, makeStyles, useTheme, Paper} from "@material-ui/core";
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Grid, IconButton, makeStyles, useTheme, Paper} from "@material-ui/core";
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -9,7 +9,8 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: '100%',
+      maxWidth: 300,
+      minHeight: 400,
     },
     media: {
       height: 0,
@@ -31,19 +32,20 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const TextCard = (props) => {
+const TextCard = ({el}) => {
     const classes = useStyles();  
     const theme = useTheme();
+    
     const [expanded, setExpanded] = React.useState(false);
-    const handleExpandClick = () => {
-    setExpanded(!expanded);
+   
+    const handleExpandClick = (el) => {
+      setExpanded(!expanded);
   };
    
-const textCard = props.array.map((el) => {
+
     return (
-      <Grid className="text-item-card" classes={classes.root} item xs={12} sm={12} lg={12}>
-        <div>
-  <Card key={el.id} published={el.published} className={classes.root}>
+  <Box p={theme.spacing(2)} xs={12} sm={6} md={4} lg={3}>
+<Card key={el.id} published={el.published} className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="writer avatar" className={classes.avatar}>
@@ -77,7 +79,7 @@ const textCard = props.array.map((el) => {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={() => {handleExpandClick(el)}}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -92,15 +94,10 @@ const textCard = props.array.map((el) => {
         </CardContent>
       </Collapse>
     </Card>
-    </div>
-      </Grid>
+
+  </Box>
+  
     )
-    })
-      return(
-        <Grid className="text-item-card" container xs={12} sm={12} lg={12}>
-            {textCard}
-        </Grid>
-        )
 };
 
 export { TextCard };
