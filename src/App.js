@@ -22,15 +22,10 @@ import { NewTextItemForm } from "./components/NewTextItemForm";
 
 
 const App = () => {
-
-  // const [isLoggedIn, setLoggedIn] = useState(false);
-
-  // const onLogin = () => {
-  //   setLoggedIn(true);
-  // }
-
-  // const onLogout = () => {
-  //   setLoggedIn(false);
+  // const LoggedIn = () => {
+  //   --> functino to check if API token valid
+  // if yes return true, if no return false and redirect to login page
+  // pass it to every component in protected route/layout?
   // }
  
   return (
