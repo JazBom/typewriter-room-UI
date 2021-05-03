@@ -9,6 +9,7 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+      minWidth: 300,
       maxWidth: 300,
       minHeight: 400,
     },
@@ -44,7 +45,7 @@ const TextCard = ({el}) => {
    
 
     return (
-  <Box p={theme.spacing(2)} xs={12} sm={6} md={4} lg={3}>
+  <Box p={theme.spacing(2)} xs={12} sm={12} md={6} lg={4}>
 <Card key={el.id} published={el.published} className={classes.root}>
       <CardHeader
         avatar={

@@ -16,7 +16,7 @@ export const AllPages = () => {
 
     return(
     <Box className="allpages" container >
-        <Box className="text-item-cards" container display='flex' flexDirection='row' xs={12} sm={12} lg={12}>
+        <Box className="text-item-cards" container display='flex' flexDirection='row' flexWrap='wrap' xs={12} sm={12} md={12} lg={12}>
           {
             pagesArray.map((el) => {
               return (<TextCard el={el} />);
