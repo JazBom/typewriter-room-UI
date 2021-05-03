@@ -7,7 +7,7 @@ export const theme = createMuiTheme({
     flexGrow: 1,
     // margin: '0, auto'
   },
-  spacing: 1,
+  spacing: 2.5,
   palette: {
         type: 'light',
         primary: {
