@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { getAllTextItems } from '../api/capstone-server';
 import { TextCard } from "./TextCard";
 
@@ -8,21 +8,22 @@ export const AllPages = () => {
   const [pagesArray, setPagesArray] = useState([]);
   
   useEffect(() => {
-      getAllTextItems().then((allTextItems) => {
-        setPagesArray(allTextItems);
+      getAllTextItems()
+      .then((data) => {
+        setPagesArray(data);
       })
     }, []);
 
     return(
-    <div className="allpages">
-      <Grid container spacing={1}>
-            <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
-            </Grid>
-            <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
-              <TextCard array={pagesArray}/>
-            </Grid>
-        </Grid>
-    </div>
+    <Box className="allpages" container >
+        <Box className="text-item-cards" container display='flex' flexDirection='row' xs={12} sm={12} lg={12}>
+          {
+            pagesArray.map((el) => {
+              return (<TextCard el={el} />);
+            })
+          }       
+        </Box>
+    </Box>
     )
 };
 

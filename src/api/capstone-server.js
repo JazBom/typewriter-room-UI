@@ -84,8 +84,6 @@ const get = {
     },
   };
 
-
-
 const getMyTextItems = () => {
     return new Promise((resolve, reject) => {
         fetch(`${baseApiUrl}/text_items/my_items`, get)

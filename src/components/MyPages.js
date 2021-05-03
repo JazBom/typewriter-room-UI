@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { getMyTextItems } from '../api/capstone-server';
-
 import { TextCard } from "./TextCard";
 
 const MyPages = () => {
@@ -14,9 +13,15 @@ const MyPages = () => {
   }, []);
 
  return (
-    <div>   
-    <TextCard array={myPagesArray} />
-    </div>
+  <Box className="mypages" container >
+  <Box className="text-item-cards" container display='flex' flexDirection='row' xs={12} sm={12} lg={12}>
+    {
+      myPagesArray.map((el) => {
+        return (<TextCard el={el} />);
+      })
+    }       
+  </Box>
+</Box>
       )
 }
 

@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { Grid } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { getPublishedTextItems } from '../api/capstone-server'
 import { TextCard } from "./TextCard";
 
 const PublishedPages = () => {
   const [publishedPagesArray, setPublishedPagesArray] = useState([]);
   useEffect(() => {
-    getPublishedTextItems().then((data) => {
+    getPublishedTextItems()
+    .then((data) => {
       setPublishedPagesArray(data);
     })
   }, []);
    
     return(
-      <div>
-      <Grid container spacing={1}>
-            <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
-            </Grid>
-            <Grid className="published-pages" item xs={12} sm={6} lg={3}>
-                <TextCard array={publishedPagesArray}/>
-            </Grid>
-      </Grid>
-      </div>
+      <Box className="allpages" container >
+        <Box className="text-item-cards" container display='flex' flexDirection='row' xs={12} sm={12} lg={12}>
+          {
+            publishedPagesArray.map((el) => {
+              return (<TextCard el={el} />);
+            })
+          }       
+        </Box>
+    </Box>
       )
 };
 
