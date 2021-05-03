@@ -1,24 +1,26 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { ProtectedLayout } from "./ProtectedLayout";
-// import { logOut } from "../api/capstone-server";
+import { logOut } from "../api/capstone-server";
 
 const ProtectedRoute = ({ component: Comp, path, pageTitle, ...rest }) => {
-  // const history = useHistory();
-  // const logOutHandler = (e) => {
-  //     e.preventDefault();
-  //     logOut();
-  //     history.push('/');
-  // }
+
+  const history = useHistory();
+  const logOutHandler = (e) => {
+      e.preventDefault();
+      logOut();
+      history.push('/');
+  }
     return (
       <Route
         exact path={path}
         {...rest}
         render={(props) => {
-        //   return loggedIn ? (
+        //   LoggedIn() return true ? (
             return (
             <ProtectedLayout 
             component={Comp} 
+            logOut={logOutHandler}
             pageTitle={pageTitle}
             {...props} 
             /> )
