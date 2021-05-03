@@ -2,9 +2,12 @@ import { createMuiTheme }  from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({  
   root: {
-    flexGrow: 3,
+    display: 'flex',
+    flexDirection: 'colummn',
+    flexGrow: 1,
+    margin: '0, auto'
   },
-  spacing: 10,
+  spacing: 1,
   palette: {
         type: 'light',
         primary: {

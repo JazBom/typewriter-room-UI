@@ -15,7 +15,6 @@ const MyPages = () => {
 
  return (
     <div>
-    <h2>My Pages</h2>
     <Grid container spacing={1}>
           <Grid className="text-item-card" item xs={12} sm={6} lg={3}>
             
