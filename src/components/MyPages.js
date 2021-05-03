@@ -13,7 +13,7 @@ const MyPages = () => {
   }, []);
 
  return (
-  <Box className="mypages" container >
+  <Box className="mypages" container width='91.5%' >
   <Box className="text-item-cards" container display='flex' flexDirection='row' flexWrap='wrap' xs={12} sm={12} md={12} lg={12}>
     {
       myPagesArray.map((el) => {
