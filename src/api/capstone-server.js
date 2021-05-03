@@ -1,6 +1,33 @@
 const baseApiUrl = 'http://localhost:9000/api'
 
-// post requests
+// initial log-in, log-out post request to API
+
+const logIn = (form) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/auth/login`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(form)
+        })
+        .then(response => response.json())
+        .then(data => {
+            window.localStorage.setItem('APItoken', data.token);
+            resolve(data);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+};
+
+const logOut = () => {
+    window.localStorage.removeItem('APItoken');
+    // window.localStorage.removeItem('token');
+};
+
+// subsequent post requests
 const post = {
       method: "POST",
       headers: {
@@ -9,6 +36,7 @@ const post = {
       },
     }
 
+    
 const postInspoItem = (newInspoItem) => {
         
     return new Promise((resolve, reject) => {
@@ -56,25 +84,7 @@ const get = {
     },
   };
 
-const logIn = (form) => {
-    return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/auth/login`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(form)
-        })
-        .then(response => response.json())
-        .then(data => {
-            window.localStorage.setItem('APItoken', data.token);
-            resolve(data);
-        })
-        .catch((error) => {
-            reject(error);
-        })
-    })
-};
+
 
 const getMyTextItems = () => {
     return new Promise((resolve, reject) => {
@@ -143,5 +153,5 @@ const getAllInspoItems = () => {
 
 
 
-export { postInspoItem, postTextItem, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn };
+export { postInspoItem, postTextItem, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn, logOut };
 
