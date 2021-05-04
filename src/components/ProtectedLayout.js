@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         content: {
         display: 'flex',
         position: 'relative',
-        top: '100px',
+        top: '80px',
         // left: '100px',
         flexGrow: 1,
         padding: theme.spacing(3),

@@ -58,16 +58,19 @@ const SideBar = (props) => {
                     <ListItemText primary="Home"/>
                 </ListItem>
                 <ListItem button component={RouterLink} to="/allpages" key="AllPages">
-                    <ListItemText primary="AllPages"/>
-                </ListItem>
-                <ListItem button component={RouterLink} to="/allpages/mypages" key="MyPages">
-                    <ListItemText primary="MyPages"/>
-                </ListItem>
-                <ListItem button component={RouterLink} to="/allpages/mypages/new" key="NewTextItemForm">
-                    <ListItemText primary="New"/>
+                    <ListItemText primary="All Pages"/>
                 </ListItem>
                 <ListItem button component={RouterLink} to="/allpages/publishedpages" key="PublishedPages">
-                    <ListItemText primary="PublishedPages"/>
+                    <ListItemText primary="Published Pages"/>
+                </ListItem>
+                <ListItem button component={RouterLink} to="/allpages/mypages" key="MyPages">
+                    <ListItemText primary="My Pages"/>
+                </ListItem>
+                <ListItem button component={RouterLink} to="/allpages/mypages/new-inspo" key="NewInspoItem">
+                    <ListItemText primary="New Inspo"/>
+                </ListItem>
+                <ListItem button component={RouterLink} to="/allpages/mypages/new-page" key="NewTextItem">
+                    <ListItemText primary="New Page"/>
                 </ListItem>
                 <Divider />
                 <ListItem button component={RouterLink} onClick={props.logOut} to="/" key="Logout">

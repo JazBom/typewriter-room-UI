@@ -52,7 +52,12 @@ const App = () => {
           pageTitle="New Inspiration"/>
 
           <ProtectedRoute 
-          path="/allpages/mypages/new"
+          path="/allpages/mypages/new-page/inspo-item/:id"
+          component={NewTextItem}
+          pageTitle="New Page"/>
+
+          <ProtectedRoute 
+          path="/allpages/mypages/new-page"
           component={NewTextItem}
           pageTitle="New Page"/>
 
