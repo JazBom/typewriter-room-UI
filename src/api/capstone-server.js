@@ -84,6 +84,22 @@ const get = {
     },
   };
 
+  const getAllRatings = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/ratings`, get)
+        .then((response) => {
+            console.log("GET ratings response", response);
+            return response.json();
+        }).then((ratingsData) => {
+            console.log("GET ratings data", ratingsData);
+            resolve(ratingsData);
+        })
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
 const getMyTextItems = () => {
     return new Promise((resolve, reject) => {
         fetch(`${baseApiUrl}/text_items/my_items`, get)
@@ -151,5 +167,5 @@ const getAllInspoItems = () => {
 
 
 
-export { postInspoItem, postTextItem, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn, logOut };
+export { postInspoItem, postTextItem, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn, logOut };
 

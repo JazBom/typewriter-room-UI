@@ -16,15 +16,26 @@ export const AllPages = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [pagesArray, setPagesArray] = useState([]);
-  
+
   useEffect(() => {
       getAllTextItems()
       .then((data) => {
         setPagesArray(data);
       })
     }, []);
+  
+  //   const handleRating = (array) => {
+  //     let newRatingsArray = [];
+  //   let rObj = {};  
+  //   array.map(obj => {
+  //     rObj = obj.rating;
+  //     return rObj;
+  //   });
+  //   newRatingsArray.push(rObj);
+  //   return newRatingsArray;
+  // };
 
-    return(
+  return(
     <Box className='all-pages' container display='flex' width='91.5%' >
         <Box className="text-item-cards" container display='flex' flexDirection='row' flexWrap='wrap' xs={12} sm={12} md={12} lg={12}>
           {

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Grid, IconButton, makeStyles, useTheme, Paper} from "@material-ui/core";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import Rating from '@material-ui/lab/Rating';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import { getAllRatings } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,24 +34,28 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 
-const TextCard = ({el}) => {
+const TextCard = (props) => {
     const classes = useStyles();  
     const theme = useTheme();
-    
+    const [defaultRating, setDefaultRating] = React.useState(2);
     const [expanded, setExpanded] = React.useState(false);
-   
+    
+    const handleNewRating = (rating) => {
+      // callpost to rating database request - is there one in capstone server??? there is already create function in backend controller/model
+      setDefaultRating(rating);
+    };
+
     const handleExpandClick = (el) => {
       setExpanded(!expanded);
-  };
-   
+    };
 
     return (
   <Box p={theme.spacing(2)} xs={12} sm={12} md={6} lg={4}>
-<Card key={el.id} published={el.published} className={classes.root}>
+<Card key={props.el.id} published={props.el.published} className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="writer avatar" className={classes.avatar}>
-            {el.writer.name}
+            {props.el.writer.name}
           </Avatar>
         }
         action={
@@ -59,38 +64,51 @@ const TextCard = ({el}) => {
           </IconButton>
         }
         title="name of text"
-        subheader={`by ${el.writer.name}`}
+        subheader={`by ${props.el.writer.name}`}
       />
       <CardMedia
         className={classes.media}
-        image={el.inspiration.imageUrl}
-        title={el.inspiration.imageOf}
+        image={props.el.inspiration.imageUrl}
+        title={props.el.inspiration.imageOf}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          {el.inspiration.sentenceOf}: {el.inspiration.sentence}
+          {props.el.inspiration.sentenceOf}: {props.el.inspiration.sentence}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <StarBorderIcon />
-          {/* make this a rating icon button */}
+     
+       
+        <IconButton aria-label="rate text-item">
+          <Rating
+          name="simple-controlled"
+          precision={0.5}
+          size="small"
+          value={defaultRating}
+          onChange={
+            (event, newRating) => {
+              handleNewRating(newRating);}
+          }
+          />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={() => {handleExpandClick(el)}}
+          onClick={() => {handleExpandClick(props.el)}}
           aria-expanded={expanded}
           aria-label="show more"
         >
           <ExpandMoreIcon />
         </IconButton>
+        <IconButton aria-label="add text-item to favorites">
+          <FavoriteIcon/>
+        </IconButton>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>
-          {el.text}
+          {props.el.text}
           </Typography>
         </CardContent>
       </Collapse>

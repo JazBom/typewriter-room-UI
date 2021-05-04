@@ -1,0 +1,74 @@
+  const [ratingsArray, setRatingsArray] = useState([]);
+    const [averageRating, setAverageRating] = useState(0);
+    
+    const calcAverageRating = (array) => {
+      let sum = 0;
+      let average = 0;
+      for (let i = 0; i < array.length; i++){
+            console.log(array);
+            sum += array[i]; 
+            console.log(sum);
+        };
+        average = Math.ceil(sum / array.length);
+        console.log('average', average);
+        // console.log(setAverageRating(average));
+
+        return average;
+      } 
+
+    useEffect(() => {
+
+      getAllRatings()
+      .then((data) => {
+        // setRatingsArray(data);
+        if(data.text_item_id === props.el.id) {
+          setRatingsArray(ratingsArray.map((data) => data.rating))
+          };
+          console.log(ratingsArray);
+      })
+      .then(calcAverageRating(ratingsArray));
+    }, []);
+
+    
+    //if (item.text_item_id === props.el.id ) { map item.rating to a new array, add the values and divide by lenfth of array}
+
+
+
+//     const averageRatingArray = [];
+//     averageRatingArray.concat(props.newRatingsArray(props.ratingArray));
+// console.log('array', averageRatingArray);
+    // let rObj = {};
+    // let newRatingsArray = props.ratingArray.map(obj => {
+    //   rObj = obj.rating;
+    //   return rObj;
+    // })
+    // console.log(rObj);
+    // let newRatingArray = props.ratingArray.map(obj => {
+    //   rObj[obj.rating] = obj.rating;
+    // return rObj;
+    // });
+    
+    // console.log(rObj);
+    // let newArray = [];
+    // newArray.map(({rating}) => rating );
+    // newArray.push(array.map(({rating}) => rating));
+    // console.log(newArray);
+    // let ratingsArray = ;
+    // let ratingsArray = array.map(x => x.rating);
+
+    // console.log(array);
+    // console.log(ratingsArray);
+
+    // let sum = 0;
+    // let average = 0;
+    // for (let i = 0; i < array.length; i++){
+    //       console.log(array);
+    //       sum = sum + array[i]; 
+    //       console.log(sum);
+    //   };
+    //   average = sum / array.length;
+    //   return average 
+    
+
+  
+   
