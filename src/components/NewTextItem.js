@@ -22,18 +22,20 @@ const useStyles = makeStyles((theme) => ({
 
 const NewTextItem = (props) => {
   const classes = useStyles();
-  const [masterArray, setMasterArray] = useState([]);
+
   const [inspoItem, setInspoItem] = useState({
       id: 0,
       sentence: '',
       sentenceOf: '',
       imageUrl: '',
-      imageOf: ''
+      imageOf: '',
       })
   const [textItem, setTextItem] = useState({
       title: '',
       text: '',
-      published: false
+      published: false,
+      inspiration_id: 0,
+      writer_id: 0,
       })
   
   useEffect(() => {
@@ -41,7 +43,13 @@ const NewTextItem = (props) => {
     getInspoItem(props.match.params.id)
       .then((data) => {
         setInspoItem(data);  
-      });
+        })
+        .then(
+          setTextItem({
+          ...textItem,
+          inspiration_id: props.match.params.id,
+          writer_id: 2,
+      }))
   }, []);
 
 const changeHandlerTextItem = (e) => {
@@ -52,7 +60,9 @@ const changeHandlerTextItem = (e) => {
     }
   
   const handleSaveTextItem = () => {
-      postTextItem(textItem, inspoItem)
+    const newTextItem = {...textItem};
+    
+      postTextItem(newTextItem)
       .then(() => {
         setInspoItem(
             {
@@ -66,14 +76,18 @@ const changeHandlerTextItem = (e) => {
             {
             title: '',
             text: '',
-            published: false
+            published: false,
+            inspiration_id: 0,
+            writer_id: 0,
             }
             );
       })
   };
 
   const handlePublishTextItem = () => {
-    const newPublishTextItem = {...textItem, published: true};
+    const newTextItem = {...textItem};
+    const newPublishTextItem = {...newTextItem, published: true};
+
     postTextItem(newPublishTextItem)
     .then(() => {
       setInspoItem(
@@ -86,9 +100,11 @@ const changeHandlerTextItem = (e) => {
         });
     setTextItem(
         {
-        title: '',
-        text: '',
-        published: false
+          title: '',
+          text: '',
+          published: false,
+          inspiration_id: 0,
+          writer_id: 0,
         }
         );
   })
@@ -107,7 +123,7 @@ const changeHandlerTextItem = (e) => {
                         <FormControl className={classes.formControl}>
                         <img src={inspoItem.imageUrl} alt={inspoItem.imageOf}/>
                         <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center">
-                          <h3>"{inspoItem.sentence}"</h3>
+                          <h3>"..{inspoItem.sentence}."</h3>
                           <p>{inspoItem.sentenceOf}</p>
                         </Box>
                         </FormControl>  
@@ -142,7 +158,7 @@ const changeHandlerTextItem = (e) => {
                     <p></p>
                       <Box item display="flex" justifyContent="center" mx="5px"xs={12} sm={12} md={6} lg={6}>              
                       <Button type="submit" variant="contained" color="primary" size="small" onClick={handleSaveTextItem}>Save</Button>
-                      <Button variant="contained" color="secondary" size="small" onSubmit={handlePublishTextItem}>Save & Publish!</Button>
+                      <Button type="submit" variant="contained" color="secondary" size="small" onClick={handlePublishTextItem}>Save & Publish!</Button>
                       </Box>  
           </Box>
     
