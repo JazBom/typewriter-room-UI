@@ -6,7 +6,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import { getAllRatings } from '../api/capstone-server';
+import { getAllRatings, postRating } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -33,16 +33,25 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-
 const TextCard = (props) => {
     const classes = useStyles();  
     const theme = useTheme();
-    const [defaultRating, setDefaultRating] = React.useState(2);
+    const [defaultRating, setDefaultRating] = React.useState(props.el.avg_rating);
     const [expanded, setExpanded] = React.useState(false);
     
-    const handleNewRating = (rating) => {
-      // callpost to rating database request - is there one in capstone server??? there is already create function in backend controller/model
-      setDefaultRating(rating);
+    const handleNewRating = (newRatingValue) => {
+      const newRating = {
+        rating: {
+          text_item_id: props.el.id,
+          rating: newRatingValue,
+          //update ID to be current-user - check in local storage
+          rater_id: 2
+        }
+      }
+      postRating(newRating)
+      .then((averageRating) => {
+        setDefaultRating(averageRating);
+      })
     };
 
     const handleExpandClick = (el) => {
@@ -81,13 +90,13 @@ const TextCard = (props) => {
        
         <IconButton aria-label="rate text-item">
           <Rating
-          name="simple-controlled"
+          name={`simple-controlled${props.el.id}`}
           precision={0.5}
           size="small"
           value={defaultRating}
           onChange={
-            (event, newRating) => {
-              handleNewRating(newRating);}
+            (event, newRatingValue) => {
+              handleNewRating(newRatingValue);}
           }
           />
         </IconButton>
