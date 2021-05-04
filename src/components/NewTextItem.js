@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-const NewTextItemForm = (props) => {
+const NewTextItem = (props) => {
 
   const classes = useStyles();
 
@@ -320,4 +320,4 @@ const changeHandlerTextItem = (e) => {
   )
 };
 
-export { NewTextItemForm };
+export { NewTextItem };

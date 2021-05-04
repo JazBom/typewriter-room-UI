@@ -14,7 +14,8 @@ import { AllPages } from './components/AllPages';
 import { MyPages } from './components/MyPages';
 import { PublishedPages } from './components/PublishedPages';
 import { ProtectedRoute } from './components/ProtectedRoute';
-import { NewTextItemForm } from "./components/NewTextItemForm";
+import { NewInspoItem } from "./components/NewInspoItem";
+import { NewTextItem } from "./components/NewTextItem";
 
 
 const App = () => {
@@ -46,9 +47,14 @@ const App = () => {
           pageTitle="Published Pages"/>
 
           <ProtectedRoute 
+          path="/allpages/mypages/new-inspo"
+          component={NewInspoItem}
+          pageTitle="New Inspiration"/>
+
+          <ProtectedRoute 
           path="/allpages/mypages/new"
-          component={NewTextItemForm}
-          pageTitle="New Text Item"/>
+          component={NewTextItem}
+          pageTitle="New Page"/>
 
           <ProtectedRoute 
           path="/allpages/mypages"
