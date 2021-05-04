@@ -64,23 +64,22 @@ const changeHandlerTextItem = (e) => {
     
       postTextItem(newTextItem)
       .then(() => {
-        setInspoItem(
-            {
-            id: 0,
-            sentence: '',
-            sentenceOf: '',
-            imageUrl: '',
-            imageOf: ''
-            });
         setTextItem(
-            {
-            title: '',
-            text: '',
-            published: false,
-            inspiration_id: 0,
-            writer_id: 0,
-            }
-            );
+              {
+                title: '',
+                text: '',
+                published: false,
+                inspiration_id: 0,
+                writer_id: 0,
+              })
+              setInspoItem(
+                {
+                id: textItem.inspiration_id,
+                sentence: '',
+                sentenceOf: '',
+                imageUrl: '',
+                imageOf: ''
+                })
       })
   };
 
@@ -98,16 +97,17 @@ const changeHandlerTextItem = (e) => {
         imageUrl: '',
         imageOf: ''
         });
-    setTextItem(
-        {
-          title: '',
-          text: '',
-          published: false,
-          inspiration_id: 0,
-          writer_id: 0,
-        }
-        );
   })
+  .then(
+    setTextItem(
+      {
+        title: '',
+        text: '',
+        published: false,
+        inspiration_id: 0,
+        writer_id: 0,
+      })
+  )
 };
 
   return (
