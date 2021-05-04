@@ -75,6 +75,25 @@ const postTextItem = (newTextItem, newInspoItem) => {
     })
 }
 
+const postRating = (newRating) => {
+        
+    return new Promise((resolve, reject) => {
+            fetch(`${baseApiUrl}/ratings`, {...post, body: JSON.stringify(newRating)})
+            .then((response) => {
+                console.log(response.status);
+                console.log("POST rating response", response);
+                return response.json();
+              })
+              .then((createdRating) => {
+                console.log("POST rating data", createdRating);
+                  resolve(createdRating);
+              })
+              .catch((error) => {
+                reject(error);
+              });
+        })
+    }
+
 //get requests
 const get = {
     method: "GET",
@@ -152,10 +171,26 @@ const getAllInspoItems = () => {
     return new Promise((resolve, reject) => {
         fetch(`${baseApiUrl}/inspirations`, get)
         .then((response) => {
-            console.log("GET inspo item response", response);
+            console.log("GET inspo items response", response);
             return response.json();
         }).then((inspoItemData) => {
-            console.log("GET inspo item data", inspoItemData);
+            console.log("GET inspo items data", inspoItemData);
+            resolve(inspoItemData);
+        })
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
+const getInspoItem = (inspoItemId) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/inspirations/${inspoItemId}`, get)
+        .then((response) => {
+            console.log("GET an inspo item response", response);
+            return response.json();
+        }).then((inspoItemData) => {
+            console.log("GET an inspo item", inspoItemData);
             resolve(inspoItemData);
         })
         .catch((error) => {
@@ -167,5 +202,7 @@ const getAllInspoItems = () => {
 
 
 
-export { postInspoItem, postTextItem, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, logIn, logOut };
+
+
+export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, logIn, logOut };
 
