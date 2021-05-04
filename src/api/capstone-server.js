@@ -56,10 +56,10 @@ const postInspoItem = (newInspoItem) => {
         })
     }
 
-const postTextItem = (newTextItem, newInspoItem) => {
-    const newItem = { textItem: {...newTextItem}, inspoItem: {...newInspoItem} };
+const postTextItem = (newTextItem) => {
+   
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items`, {...post, body: JSON.stringify(newItem)})
+        fetch(`${baseApiUrl}/text_items`, {...post, body: JSON.stringify(newTextItem)})
         .then((response) => {
             console.log(response.status);
             console.log("POST text item response", response);
