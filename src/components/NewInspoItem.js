@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { uniq } from "lodash";
-// import { useHistory} from "react-router";
-import { Button, Box, TextField, FormHelperText, FormControl, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
-import { postInspoItem, postTextItem, getAllInspoItems } from '../api/capstone-server';
+import { useHistory} from "react-router-dom";
+import { Button, Box, TextField, FormHelperText, FormControl, InputLabel, makeStyles, NativeSelect, useTheme } from '@material-ui/core';
+import Divider from "@material-ui/core/Divider";
+import { postInspoItem, getAllInspoItems } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -18,48 +19,41 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
       marginTop: theme.spacing(1),
     },
-  
+  margin: theme.spacing(1),
 }));
 
 const NewInspoItem = (props) => {
-
   const classes = useStyles();
-
+  const theme = useTheme();
+  const history = useHistory();
   const [masterArray, setMasterArray] = useState([]);
-
   const [inspoItem, setInspoItem] = useState({
-      id: 0,
-      sentence: '',
-      sentenceOf: '',
-      imageUrl: '',
-      imageOf: ''
-      })
-  
+        id: 0,
+        sentence: '',
+        sentenceOf: '',
+        imageUrl: '',
+        imageOf: ''
+        })
   const [selectedSentenceOf, setSelectedSentenceOf] = useState({
         sentenceOf: ''
         })
-
   const [selectedSentence, setSelectedSentence] = useState({
         sentenceOf: '',
         sentence: ''
         })
-
   const [selectedImageOf, setSelectedImageOf] = useState({
           imageOf: ''
           })
-
   const [selectedImage, setSelectedImage] = useState({
         imageOf: '',
         imageUrl: ''
         })
-
   const [sentenceOfDropDownArray, setSentenceOfDropDownArray] = useState([]);
   const [sentenceDropDownArray, setSentenceDropDownArray] = useState([]);
   const [imageOfDropDownArray, setImageOfDropDownArray] = useState([]);
   const [imageDropDownArray, setImageDropDownArray] = useState([]);
 
   useEffect(() => {
-
     getAllInspoItems()
     .then((data) => {
       console.log(data);
@@ -69,7 +63,7 @@ const NewInspoItem = (props) => {
     });
   }, []);
 
-  const handleSelectSentenceOf = (e) => {
+const handleSelectSentenceOf = (e) => {
           setSelectedSentenceOf({
             sentenceOf: e.target.value,
           });
@@ -116,6 +110,13 @@ const handleSelectSentence = (e) => {
     })
   };
 
+  const handleRandomInspoItem = () => {
+    //random API call via capstone server
+    // const randomInspo = functionAPICall
+    //setInspoItem(randomInspo)
+    //then rest inspo item to empty?
+  }
+
   const handleSaveInspoItem = () => {
     postInspoItem(inspoItem)
     .then(() => {
@@ -130,32 +131,32 @@ const handleSelectSentence = (e) => {
     })
   };
 
-  const handleSaveInspoItemAndWriteText = () => {
+  const handleSaveInspoItemAndWrite = (e) => {
+    e.preventDefault();
     postInspoItem(inspoItem)
-    .then(() => {
-      
-    })
-    .then(() => {
-        setInspoItem(
-            {
-            id: 0,
-            sentence: '',
-            sentenceOf: '',
-            imageUrl: '',
-            imageOf: ''
-            });
+    .then((createdInspoItem) => {
+      history.push(`/allpages/mypages/new-page/inspo-item/${createdInspoItem.id}`)
     })
   };
 
   return (
-
           <Box container className={classes.root}>
-    
-                    <Box item xs={12} sm={12} lg={12} >
-                      <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
+            <Divider/>
+            <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
+            <Divider/>
+            <h3></h3>
+            </Box>
+                    {/* <Button type="button" variant="contained" color="primary" size="small" onClick={handleFindInspoItem}>Play it safe</Button>
+                    <Button type="button" variant="contained" color="primary" size="small" onClick={handleRandomInspoItem}>Roll the dice</Button> */}
+                    <Box item display="flex" flexDirection="row" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12} >
+                    <h4> .... TRY </h4>
+                    <Button type="button" variant="contained" color="secondary" size="small" onClick={handleRandomInspoItem} xs={3} sm={3} md={2} lg={2}>me</Button>
+                    <h4> for inspo!</h4>
                     </Box>
-                    
+                    <p></p>
+                    <Divider/>
                     <Box item xs={12} sm={12} lg={12}>     
+                    <p>OR choose from existing inspiration below</p>
                         <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="sentenceOf-native-helper">Who said it?</InputLabel>
                               <NativeSelect
@@ -241,12 +242,16 @@ const handleSelectSentence = (e) => {
                               </FormControl>
                               
                     </Box>  
-                      <Box item className={classes.formControl} justifyContent='right' xs={12} sm={12} md={6} lg={6}>        
-                      <Button type="button" variant="contained" color="secondary" size="small" onClick={handleSaveInspoItem}>Save</Button>
-                      <Button type="button" variant="contained" color="primary" size="small" onClick={handleSaveInspoItemAndWriteText}>Save&write!</Button>      
+                    <p></p>
+                    <p></p>
+                    <Divider/>
+                    <p></p>
+                      <Box item display="flex" justifyContent="center" mx="5px" xs={12} sm={12} md={12} lg={12}>        
+                      <Button type="button" variant="contained" color="primary" size="small" onClick={handleSaveInspoItem}>Save</Button>
+                      <Button type="button" variant="contained" color="secondary" size="small" onClick={handleSaveInspoItemAndWrite}>Save & Write!</Button>      
                       </Box>  
-          </Box>
-    
+              </Box>
+         
   )
 };
 
