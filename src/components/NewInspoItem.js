@@ -106,6 +106,7 @@ const handleSelectSentence = (e) => {
     });
     setInspoItem({
       ...inspoItem,
+      
       imageUrl: e.target.value
     })
   };
@@ -147,14 +148,15 @@ const handleSelectSentence = (e) => {
                     {/* <Button type="button" variant="contained" color="primary" size="small" onClick={handleFindInspoItem}>Play it safe</Button>
                     <Button type="button" variant="contained" color="primary" size="small" onClick={handleRandomInspoItem}>Roll the dice</Button> */}
                     <Box item display="flex" flexDirection="row" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12} >
-                    <h4> .... TRY </h4>
-                    <Button type="button" variant="contained" color="secondary" size="small" onClick={handleRandomInspoItem} xs={3} sm={3} md={2} lg={2}>me</Button>
-                    <h4> for inspo!</h4>
+                    <h4> ... roll the </h4>
+                    <Button type="button" variant="contained" color="secondary" size="small" onClick={handleRandomInspoItem} xs={3} sm={3} md={2} lg={2}>dice</Button>
+                    <h4> for inspo</h4>
                     </Box>
                     <p></p>
                     <Divider/>
-                    <Box item xs={12} sm={12} lg={12}>     
-                    <p>OR choose from existing inspiration below</p>
+                    <p></p>
+                    <Box item display="flex" flexDirection="column" alignItems="center" xs={12} sm={12} md={12} lg={12}>     
+                    <h5>or pick something yourself </h5>
                         <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="sentenceOf-native-helper">Who said it?</InputLabel>
                               <NativeSelect
@@ -176,10 +178,11 @@ const handleSelectSentence = (e) => {
                       </Box>
         
 
-                    <Box item xs={12} sm={12} lg={12}>  
+                    <Box item display="flex" flexDirection="column" alignItems="center" xs={12} sm={12} md={12} lg={12}>  
                         <FormControl className={classes.formControl}>
                         <InputLabel htmlFor="sentence-native-helper">What did they say?</InputLabel>
                               <NativeSelect
+                              
                               value={selectedSentence.sentence}
                               onChange={handleSelectSentence}
                               inputProps={{
@@ -198,7 +201,7 @@ const handleSelectSentence = (e) => {
                       </Box>
         
 
-                    <Box item xs={12} sm={12} lg={12}>  
+                    <Box item display="flex" flexDirection="column" alignItems="center" xs={12} sm={12} md={12} lg={12}>  
                               <FormControl className={classes.formControl}>
                               <InputLabel htmlFor="imageOf-native-helper">ImageOf</InputLabel>
                               <NativeSelect
@@ -218,7 +221,7 @@ const handleSelectSentence = (e) => {
                               </NativeSelect>
                               </FormControl>   
                     </Box>    
-                    <Box item xs={12} sm={12} lg={12}>  
+                    <Box item display="flex" flexDirection="column" alignItems="center" xs={12} sm={12} md={12} lg={12}>  
                               <FormControl className={classes.formControl}>
                               <InputLabel htmlFor="image-native-helper">Image</InputLabel>
                               <NativeSelect
@@ -237,11 +240,9 @@ const handleSelectSentence = (e) => {
                                           })}
                               </NativeSelect>
                               <img id="selectedImage" src={selectedImage.imageUrl}/>
-                              </FormControl>
-                              
+                              </FormControl> 
+                    { inspoItem.id === 0 ? (<h5></h5>) : (<h5>Inspo ref: {inspoItem.id}</h5>) }
                     </Box>  
-                    <p></p>
-                    <p>Inspo ref: {inspoItem.id}</p>
                     <Divider/>
                     <p></p>
                       <Box item display="flex" justifyContent="center" mx="5px" xs={12} sm={12} md={12} lg={12}>        
