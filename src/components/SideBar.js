@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         padding: theme.spacing(0,1),
         ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-around',
     },
 }));
 
@@ -47,10 +47,10 @@ const SideBar = (props) => {
         }}
         >
             <div className={classes.drawerHeader}>
-                <IconButton onClick={onCloseSideBarClick}>
-                    {theme.direction === 'ltr' ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-                    {/* do I need both left and right option if menu and sidebar always on left? */}
-                    </IconButton>
+                {props.search()}
+            <IconButton onClick={onCloseSideBarClick}>
+                <ChevronLeftIcon color="grey"/>
+            </IconButton>
             </div>
             <Divider />
             <List>
