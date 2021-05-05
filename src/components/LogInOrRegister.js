@@ -1,49 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router";
-import { Button, TextField, Grid, makeStyles } from '@material-ui/core';
+import { Box, Button, Divider, FormControl, InputAdornment, makeStyles, useTheme, TextField } from '@material-ui/core';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { logIn } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(10),
-      width: 200,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    // alignContent: 'center',
     },
-  },
+  formControl: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: theme.spacing(1),
+    width: 300,
+    justifyContent: 'space-evenly',
+    },
+  selectEmpty: {
+      marginTop: theme.spacing(1),
+    },
+  
 }));
 
-const LogInOrRegister = (props) => {
+const LogInOrRegister = () => {
 
   
   const classes = useStyles();
-
+  const theme = useTheme();
   const history = useHistory();
 
-    const [registerForm, setRegisterForm] = useState({
+  const [registerForm, setRegisterForm] = useState({
       name: '',
       password: ''
       })
   
-    const [logInForm, setLogInForm] = useState({
+  const [logInForm, setLogInForm] = useState({
         name: '',
         password: ''
       })
 
-    const changeHandlerRegister = (e) => {
+  const changeHandlerRegister = (e) => {
         const newRegisterFormState = {...registerForm};
         newRegisterFormState[e.target.name] = e.target.value;
         console.log(newRegisterFormState);
         setRegisterForm(newRegisterFormState);
     }
 
-    const changeHandlerLogIn = (e) => {
+  const changeHandlerLogIn = (e) => {
       const newLogInFormState = {...logInForm};
       newLogInFormState[e.target.name] = e.target.value;
       console.log(newLogInFormState);
       setLogInForm(newLogInFormState);
   }
 
-    const logInHandler = (e) => {
+  const logInHandler = (e) => {
         e.preventDefault();
         logIn(logInForm)
         .then((response) => {
@@ -54,77 +68,91 @@ const LogInOrRegister = (props) => {
     }
 
   return (
-    <Grid
+    <Box
     container
     className={classes.root}
-    // spacing={props.theme.spacing(20)}
   >
+  <h3>the Typewriter Room</h3>
   
-  <Grid className={classes.root}>
-  <form className="register">
-    <h2>New to the Typewriter Room?</h2>
-    <Grid>
-    <Button variant="contained" color="primary" size="small">Register</Button>
-    </Grid>
-    <Grid>
+  <h5>Newbies</h5>
+  <form>
+  
+<Box className={classes.formControl} style={{margin: '2rem'}}>
+
+  
     <TextField
+          size="small"
           label="Name"
           name="name"
           onChange={changeHandlerRegister}
-          id="outlined-size-small"
-          variant="outlined"
-          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle style={{color: 'grey'}}/>
+              </InputAdornment>
+            ),
+          }}
         />
     <TextField
+          size="small"
           label="Password"
           name="password"
           type="password"
           onChange={changeHandlerRegister}
-          id="outlined-size-small"
-          variant="outlined"
-          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockOutlinedIcon style={{color: 'grey'}}/>
+              </InputAdornment>
+            ),
+          }}
         />
-    </Grid>
+    <Button variant="contained" color="primary" size="small" >Register</Button>
+    <Divider/>
+    </Box> 
+    </form>
+
+    <Box className={classes.formControl} style={{margin: '5rem'}}>
+      <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
+    </Box>
+
+    <form onSubmit={logInHandler}>
+    <Box className={classes.formControl} style={{margin: '2rem'}}>
+    <Divider/>
     
-    </form>  
-  </Grid>
-  
-  <Grid item xs={12} sm={12} lg={12} >
-    <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
-  </Grid>
-  
-  <Grid item xs={12} sm={12} lg={12}>
-  <form className="login" onSubmit={logInHandler}>
-    <Grid>
     <TextField
+          size="small"
           label="Name"
           name="name"
           onChange={changeHandlerLogIn}
-          id="outlined-size-small"
-          variant="outlined"
-          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <AccountCircle style={{color: 'grey'}}/>
+              </InputAdornment>
+            ),
+          }}
         />
     <TextField
+          size="small"
           label="Password"
           name="password"
           type="password"
           onChange={changeHandlerLogIn}
-          id="outlined-size-small"
-          variant="outlined"
-          size="small"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <LockOutlinedIcon style={{color: 'grey'}}/>
+              </InputAdornment>
+            ),
+          }}
         />
-    </Grid>
-    <Grid>
-    <Button type="submit" variant="contained" color="primary" size="small">Log-in</Button>
-    </Grid>
-    <h2>Get typing...</h2>
-
-    </form>  
-  </Grid>
-  
-</Grid>
-
+        <Button type="submit" variant="contained" color="primary" size="small">Log-in</Button>
+    </Box>
+    </form>
+    <h5>Get typing...</h5>
     
+  </Box>   
   );
 };
 
