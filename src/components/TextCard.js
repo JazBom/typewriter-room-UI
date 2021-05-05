@@ -78,13 +78,6 @@ const TextCard = (props) => {
 
     const handleSaveEditedItem = (e) => {
         editTextItem(editedText)
-        // .then(
-        //     setEditedText(editedText)
-        //   )
-        .then(
-          props.refreshPages()
-         
-        );
         setEditing(false)
       }
     
