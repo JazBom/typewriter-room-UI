@@ -3,7 +3,7 @@ import { uniq } from "lodash";
 import { useHistory} from "react-router-dom";
 import { Button, Box, TextField, FormHelperText, FormControl, InputLabel, makeStyles, NativeSelect, useTheme } from '@material-ui/core';
 import Divider from "@material-ui/core/Divider";
-import { postInspoItem, getAllInspoItems } from '../api/capstone-server';
+import { postInspoItem, getAllInspoItems, getInspoItem } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -119,18 +119,16 @@ const handleSelectSentence = (e) => {
 
   const handleSaveInspoItem = () => {
     postInspoItem(inspoItem)
-    .then(() => {
+    .then((createdInspoItem) => {
       setInspoItem(
-          {
-          id: 0,
-          sentence: '',
-          sentenceOf: '',
-          imageUrl: '',
-          imageOf: ''
-          });
+        {
+        ...inspoItem,
+        id: createdInspoItem.id,
+        });
+        history.push(`/allpages/mypages/new-inspo/${createdInspoItem.id}`)
     })
   };
-
+  
   const handleSaveInspoItemAndWrite = (e) => {
     e.preventDefault();
     postInspoItem(inspoItem)
@@ -243,7 +241,7 @@ const handleSelectSentence = (e) => {
                               
                     </Box>  
                     <p></p>
-                    <p></p>
+                    <p>Inspo ref: {inspoItem.id}</p>
                     <Divider/>
                     <p></p>
                       <Box item display="flex" justifyContent="center" mx="5px" xs={12} sm={12} md={12} lg={12}>        
