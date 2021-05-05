@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { uniq } from "lodash";
-// import { useHistory} from "react-router";
+import { useHistory } from "react-router-dom";
 import { Button, Box, TextField, FormHelperText, FormControl, Divider, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
 import { postInspoItem, postTextItem, getAllInspoItems, getInspoItem } from '../api/capstone-server';
 
@@ -21,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewTextItem = (props) => {
+
   const classes = useStyles();
+  const history = useHistory();
 
   const [inspoItem, setInspoItem] = useState({
       id: 0,
@@ -48,6 +50,7 @@ const NewTextItem = (props) => {
           setTextItem({
           ...textItem,
           inspiration_id: props.match.params.id,
+          //change below to get writer id from current user when know how defined
           writer_id: 2,
       }))
   }, []);
@@ -61,26 +64,10 @@ const changeHandlerTextItem = (e) => {
   
   const handleSaveTextItem = () => {
     const newTextItem = {...textItem};
-    
       postTextItem(newTextItem)
-      .then(() => {
-        setTextItem(
-              {
-                title: '',
-                text: '',
-                published: false,
-                inspiration_id: 0,
-                writer_id: 0,
-              })
-              setInspoItem(
-                {
-                id: textItem.inspiration_id,
-                sentence: '',
-                sentenceOf: '',
-                imageUrl: '',
-                imageOf: ''
-                })
-      })
+      .then(
+        history.push('/allpages/mypages')
+        )
   };
 
   const handlePublishTextItem = () => {
@@ -88,26 +75,10 @@ const changeHandlerTextItem = (e) => {
     const newPublishTextItem = {...newTextItem, published: true};
 
     postTextItem(newPublishTextItem)
-    .then(() => {
-      setInspoItem(
-        {
-        id: 0,
-        sentence: '',
-        sentenceOf: '',
-        imageUrl: '',
-        imageOf: ''
-        });
-  })
-  .then(
-    setTextItem(
-      {
-        title: '',
-        text: '',
-        published: false,
-        inspiration_id: 0,
-        writer_id: 0,
-      })
-  )
+    .then(
+      history.push('/allpages/mypages')
+      )
+      
 };
 
   return (
