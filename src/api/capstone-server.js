@@ -14,6 +14,7 @@ const logIn = (form) => {
         .then(response => response.json())
         .then(data => {
             window.localStorage.setItem('APItoken', data.token);
+            window.localStorage.setItem('currentUser', JSON.stringify({ id: data.user.id, name: data.user.name }));
             resolve(data);
         })
         .catch((error) => {
@@ -24,8 +25,12 @@ const logIn = (form) => {
 
 const logOut = () => {
     window.localStorage.removeItem('APItoken');
-    // window.localStorage.removeItem('token');
+    window.localStorage.removeItem('currentUser');
 };
+
+const getCurrentUser = () => {
+    return JSON.parse(window.localStorage.getItem('currentUser'));
+}
 
 // other POST requests
 const post = (data) => {
@@ -261,4 +266,4 @@ const deleteTextItem = (textItemId) => {
     });
 }; 
 
-export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, editTextItem, deleteTextItem, logIn, logOut };
+export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, editTextItem, deleteTextItem, logIn, logOut, getCurrentUser };
