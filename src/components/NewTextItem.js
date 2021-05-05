@@ -87,7 +87,7 @@ const changeHandlerTextItem = (e) => {
                     <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
                       <h2>Hi Jess</h2>
                       <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
-                      <p>Inspo no: {inspoItem.id}</p>
+                      { inspoItem.id > 0 ? (<h5>Inspo ref: {inspoItem.id}</h5>) : (<h5></h5>) }
                     </Box>
                     <Divider/>
                     <Box item xs={12} sm={12} md={12} lg={12}>     
