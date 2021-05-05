@@ -78,6 +78,7 @@ const LogInOrRegister = (props) => {
     <TextField
           label="Password"
           name="password"
+          type="password"
           onChange={changeHandlerRegister}
           id="outlined-size-small"
           variant="outlined"
@@ -106,6 +107,7 @@ const LogInOrRegister = (props) => {
     <TextField
           label="Password"
           name="password"
+          type="password"
           onChange={changeHandlerLogIn}
           id="outlined-size-small"
           variant="outlined"
