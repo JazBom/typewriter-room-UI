@@ -72,7 +72,7 @@ const TextCard = (props) => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="name of text"
+        title={props.el.title}
         subheader={`by ${props.el.writer.name}`}
       />
       <CardMedia
