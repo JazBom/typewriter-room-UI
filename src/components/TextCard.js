@@ -10,7 +10,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import { deleteTextItem, editTextItem, getAllTextItems, postRating } from '../api/capstone-server';
+import { getCurrentUser, deleteTextItem, editTextItem, getAllTextItems, postRating } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,7 +48,8 @@ const TextCard = (props) => {
     const [editedText, setEditedText] = React.useState(props.el);
     const [expanded, setExpanded] = React.useState(false);
     const [editing, setEditing] = React.useState(false);
-
+//     const cardIcons = () => { 
+// }
     const handleNewRating = (newRatingValue) => {
       const newRating = {
         rating: {
@@ -122,8 +123,8 @@ const TextCard = (props) => {
       </CardContent>
       <CardActions disableSpacing>
      
-       
-        <IconButton aria-label="rate text-item">
+      {props.el.writer_id!==getCurrentUser().id && 
+      <IconButton aria-label="rate text-item">
           <Rating
           name={`simple-controlled${props.el.id}`}
           precision={0.5}
@@ -132,10 +133,17 @@ const TextCard = (props) => {
           onChange={
             (event, newRatingValue) => {
               handleNewRating(newRatingValue);}
-          }
+            }
           />
-        </IconButton>
+      </IconButton> 
+      }
 
+      {props.el.writer_id!==getCurrentUser().id && 
+      <IconButton aria-label="add text-item to favorites">
+        <FavoriteIcon/>
+      </IconButton> 
+      }
+        
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -147,43 +155,37 @@ const TextCard = (props) => {
           <ExpandMoreIcon />
         </IconButton>
 
-        {/* <IconButton aria-label="add text-item to favorites">
-          <FavoriteIcon/>
-        </IconButton> */}
-
         { editing ? (
-          <IconButton aria-label="save text-item">
+        props.el.writer_id===getCurrentUser().id && 
+        <IconButton aria-label="save text-item">
         <SaveIcon 
                 size="small"
                 value={editedText}
                 onClick={
                 (event, newEditedText) => {
                 handleSaveEditedItem(newEditedText);}
-          }
+                }
               />
         </IconButton>
         ) : (
-
-          <IconButton aria-label="edit text-item">
-
+        props.el.writer_id===getCurrentUser().id && 
+        <IconButton aria-label="edit text-item">
           <EditIcon
           size="small"
-          // if user, enabled, if not, iconButton disabled, and/or not visible?
           onClick={handleSelectEditItem}
           />
-
         </IconButton>
         )
       }
         
-
-        <IconButton aria-label="delete text-item">
+      {props.el.writer_id===getCurrentUser().id && 
+      <IconButton aria-label="delete text-item">
           <DeleteIcon
           size="small"
-          // if user, enabled, if not, iconButton disabled, and/or not visible?
           onClick={() => {handleDeleteItem(props.el.id)}}
           />
-        </IconButton>
+      </IconButton>
+      }
 
       </CardActions>
 
