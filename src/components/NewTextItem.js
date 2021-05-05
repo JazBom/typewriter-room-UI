@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { uniq } from "lodash";
 import { useHistory } from "react-router-dom";
 import { Button, Box, TextField, FormHelperText, FormControl, Divider, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
-import { postInspoItem, postTextItem, getAllInspoItems, getInspoItem } from '../api/capstone-server';
+import { postInspoItem, postTextItem, getMyTextItems, getInspoItem } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +65,7 @@ const changeHandlerTextItem = (e) => {
   const handleSaveTextItem = () => {
     const newTextItem = {...textItem};
       postTextItem(newTextItem)
+      .then(getMyTextItems())
       .then(
         history.push('/allpages/mypages')
         )
@@ -73,12 +74,11 @@ const changeHandlerTextItem = (e) => {
   const handlePublishTextItem = () => {
     const newTextItem = {...textItem};
     const newPublishTextItem = {...newTextItem, published: true};
-
     postTextItem(newPublishTextItem)
+    .then(getMyTextItems())
     .then(
       history.push('/allpages/mypages')
       )
-      
 };
 
   return (

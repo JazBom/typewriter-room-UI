@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Grid, IconButton, makeStyles, useTheme, Paper} from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, makeStyles, useTheme, TextareaAutosize } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import SaveIcon from '@material-ui/icons/Save';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import { getAllRatings, postRating } from '../api/capstone-server';
+import { deleteTextItem, editTextItem, getAllTextItems, postRating } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -31,14 +35,20 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: theme.palette.primary,
     },
+    textarea: {
+      resize: "both"
+    }
   }));
 
 const TextCard = (props) => {
     const classes = useStyles();  
+    const history = useHistory();
     const theme = useTheme();
     const [defaultRating, setDefaultRating] = React.useState(props.el.avg_rating);
+    const [editedText, setEditedText] = React.useState(props.el);
     const [expanded, setExpanded] = React.useState(false);
-    
+    const [editing, setEditing] = React.useState(false);
+
     const handleNewRating = (newRatingValue) => {
       const newRating = {
         rating: {
@@ -54,8 +64,40 @@ const TextCard = (props) => {
       })
     };
 
-    const handleExpandClick = (el) => {
+    const handleExpandClick = () => {
       setExpanded(!expanded);
+      if (editing) {setEditing(false)}; 
+    };
+
+    
+    const changeHandlerEditTextItem = (e) => {
+      const newEditedText = {...props.el, text: e.target.value};
+      console.log(newEditedText);
+      setEditedText(newEditedText);
+      }
+
+    const handleSaveEditedItem = (e) => {
+        editTextItem(editedText)
+        // .then(
+        //     setEditedText(editedText)
+        //   )
+        .then(
+          props.refreshPages()
+         
+        );
+        setEditing(false)
+      }
+    
+    const handleSelectEditItem = (e) => {
+      setExpanded(true);
+      setEditing(true);
+    }
+
+    const handleDeleteItem = () => {
+      deleteTextItem(props.el.id)
+      .then(      
+        history.push('/allpages/mypages')
+      )
     };
 
     return (
@@ -100,6 +142,7 @@ const TextCard = (props) => {
           }
           />
         </IconButton>
+
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -110,17 +153,65 @@ const TextCard = (props) => {
         >
           <ExpandMoreIcon />
         </IconButton>
-        <IconButton aria-label="add text-item to favorites">
+
+        {/* <IconButton aria-label="add text-item to favorites">
           <FavoriteIcon/>
+        </IconButton> */}
+
+        { editing ? (
+          <IconButton aria-label="save text-item">
+        <SaveIcon 
+                size="small"
+                value={editedText}
+                onClick={
+                (event, newEditedText) => {
+                handleSaveEditedItem(newEditedText);}
+          }
+              />
         </IconButton>
+        ) : (
+
+          <IconButton aria-label="edit text-item">
+
+          <EditIcon
+          size="small"
+          // if user, enabled, if not, iconButton disabled, and/or not visible?
+          onClick={handleSelectEditItem}
+          />
+
+        </IconButton>
+        )
+      }
+        
+
+        <IconButton aria-label="delete text-item">
+          <DeleteIcon
+          size="small"
+          // if user, enabled, if not, iconButton disabled, and/or not visible?
+          onClick={() => {handleDeleteItem(props.el.id)}}
+          />
+        </IconButton>
+
       </CardActions>
+
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>
-          {props.el.text}
-          </Typography>
+          {
+          editing ? ( 
+          <TextareaAutosize 
+          style={{ minWidth: "100%", maxWidth: "100%", outline: "none" }} 
+          rowsMin={10} 
+          aria-label="editable textarea"
+          onChange={changeHandlerEditTextItem}
+          >
+            {editedText.text}
+          </TextareaAutosize>
+          ) : (
+          <Typography paragraph>{editedText.text}</Typography>
+          )}
         </CardContent>
       </Collapse>
+      
     </Card>
 
   </Box>

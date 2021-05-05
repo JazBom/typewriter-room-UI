@@ -27,7 +27,7 @@ const logOut = () => {
     // window.localStorage.removeItem('token');
 };
 
-// subsequent post requests
+// other POST requests
 const post = (data) => {
     return {
         method: "POST",
@@ -97,7 +97,7 @@ const postRating = (newRating) => {
         })
     }
 
-//get requests
+//GET requests
 const get = () => {
    return {
         method: "GET",
@@ -204,10 +204,61 @@ const getInspoItem = (inspoItemId) => {
     });
 };
 
+// PUT (EDIT) requests 
+const put = (data) => {
+    return {
+         method: "PUT",
+         headers: {
+             "Content-Type": "application/json",
+             "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
+         },
+        body: JSON.stringify(data),
+       }
+ };
 
+ const editTextItem = (textItem) => {
+     console.log(textItem);
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/text_items/${textItem.id}`, put({text_item: {text: textItem.text}}))
+          .then((response) => {
+              console.log("EDIT text item response", response);
+              return response.json();
+          }).then((textItemData) => {
+              console.log("EDIT text item data", textItemData);
+              resolve(textItemData);
+          })
+          .catch((error) => {
+              reject(error);
+          });  
+    })
+ };
 
+//DELETE requests
 
+const deleteItem = () => {
+    return {
+         method: "DELETE",
+         headers: {
+             "Content-Type": "application/json",
+             "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
+         },
+       }
+ } 
 
+const deleteTextItem = (textItemId) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/text_items/${textItemId}`, deleteItem())
+          .then((response) => {
+              console.log("DELETE text item response", response);
+              return response.json();
+          }).then((textItemData) => {
+              console.log("DELETE text item data", textItemData);
+              resolve(textItemData);
+          })
+          .catch((error) => {
+              reject(error);
+          });  
+    });
+}; 
 
-export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, logIn, logOut };
-
+export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, editTextItem, deleteTextItem, logIn, logOut };
