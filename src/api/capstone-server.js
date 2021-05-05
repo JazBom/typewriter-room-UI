@@ -28,19 +28,22 @@ const logOut = () => {
 };
 
 // subsequent post requests
-const post = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
-      },
-    }
+const post = (data) => {
+    return {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
+        },
+        body: JSON.stringify(data),
+      };
+}
 
     
 const postInspoItem = (newInspoItem) => {
         
     return new Promise((resolve, reject) => {
-            fetch(`${baseApiUrl}/inspirations`, {...post, body: JSON.stringify(newInspoItem)})
+            fetch(`${baseApiUrl}/inspirations`, post(newInspoItem))
             .then((response) => {
                 console.log(response.status);
                 console.log("POST inspo item response", response);
@@ -59,7 +62,7 @@ const postInspoItem = (newInspoItem) => {
 const postTextItem = (newTextItem) => {
    
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items`, {...post, body: JSON.stringify(newTextItem)})
+        fetch(`${baseApiUrl}/text_items`, post(newTextItem))
         .then((response) => {
             console.log(response.status);
             console.log("POST text item response", response);
@@ -78,7 +81,7 @@ const postTextItem = (newTextItem) => {
 const postRating = (newRating) => {
         
     return new Promise((resolve, reject) => {
-            fetch(`${baseApiUrl}/ratings`, {...post, body: JSON.stringify(newRating)})
+            fetch(`${baseApiUrl}/ratings`, post(newRating))
             .then((response) => {
                 console.log(response.status);
                 console.log("POST rating response", response);
@@ -95,17 +98,19 @@ const postRating = (newRating) => {
     }
 
 //get requests
-const get = {
-    method: "GET",
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
-    },
-  };
-
+const get = () => {
+   return {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
+        },
+      };
+    
+} 
   const getAllRatings = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/ratings`, get)
+        fetch(`${baseApiUrl}/ratings`, get())
         .then((response) => {
             console.log("GET ratings response", response);
             return response.json();
@@ -121,7 +126,7 @@ const get = {
 
 const getMyTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items/my_items`, get)
+        fetch(`${baseApiUrl}/text_items/my_items`, get())
           .then((response) => {
               console.log("GET my text item response", response);
               return response.json();
@@ -137,7 +142,7 @@ const getMyTextItems = () => {
 
 const getPublishedTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items/published`, get)
+        fetch(`${baseApiUrl}/text_items/published`, get())
           .then((response) => {
               console.log("GET published text item response", response);
               return response.json();
@@ -153,7 +158,7 @@ const getPublishedTextItems = () => {
 
 const getAllTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items`, get)
+        fetch(`${baseApiUrl}/text_items`, get())
         .then((response) => {
             console.log("GET text item response", response);
             return response.json();
@@ -169,7 +174,7 @@ const getAllTextItems = () => {
 
 const getAllInspoItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/inspirations`, get)
+        fetch(`${baseApiUrl}/inspirations`, get())
         .then((response) => {
             console.log("GET inspo items response", response);
             return response.json();
@@ -185,7 +190,7 @@ const getAllInspoItems = () => {
 
 const getInspoItem = (inspoItemId) => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/inspirations/${inspoItemId}`, get)
+        fetch(`${baseApiUrl}/inspirations/${inspoItemId}`, get())
         .then((response) => {
             console.log("GET an inspo item response", response);
             return response.json();
