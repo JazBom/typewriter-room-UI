@@ -44,7 +44,7 @@ const TopBar = (props) => {
             [classes.appBarShift]: sideBarOpen,
         })}
         >
-            <Toolbar>
+            <Toolbar display="flex" flexDirection="row" justifyContent="space-evenly">
                 <IconButton
                 color="inherit"
                 aria-label="open-drawer"
@@ -54,9 +54,10 @@ const TopBar = (props) => {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" noWrap>
+                <Typography display="flex" variant="h6" noWrap>
                     {pageTitle}
                 </Typography>
+               
             </Toolbar>
         </AppBar>
     )
