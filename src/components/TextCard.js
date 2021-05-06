@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, makeStyles, useTheme, TextareaAutosize } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
+import PublishRoundedIcon from '@material-ui/icons/PublishRounded';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
@@ -10,7 +11,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import { getCurrentUser, deleteTextItem, editTextItem, getAllTextItems, postRating } from '../api/capstone-server';
+import { getCurrentUser, deleteTextItem, editTextItem, publishTextItem, postRating } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,6 +46,7 @@ const TextCard = (props) => {
     const history = useHistory();
     const theme = useTheme();
     const [defaultRating, setDefaultRating] = React.useState(props.el.avg_rating);
+    const [publishText, setPublishText] = React.useState(props.el);
     const [editedText, setEditedText] = React.useState(props.el);
     const [expanded, setExpanded] = React.useState(false);
     const [editing, setEditing] = React.useState(false);
@@ -87,6 +89,14 @@ const TextCard = (props) => {
       setEditing(true);
     }
 
+    const handlePublishItem = (e) => {
+      const newPublishText = {...props.el, published: true};
+      publishTextItem(newPublishText)
+      .then(      
+        setPublishText(newPublishText)
+      )
+    };
+
     const handleDeleteItem = () => {
       deleteTextItem(props.el.id)
       .then(      
@@ -96,7 +106,7 @@ const TextCard = (props) => {
 
     return (
   <Box p={theme.spacing(2)} xs={12} sm={12} md={6} lg={4}>
-<Card key={props.el.id} published={props.el.published} className={classes.root}>
+<Card key={props.el.id} className={classes.root}>
       <CardHeader
         avatar={
           <Avatar aria-label="writer avatar" className={classes.avatar}>
@@ -109,7 +119,9 @@ const TextCard = (props) => {
           </IconButton>
         }
         title={props.el.title}
-        subheader={`by ${props.el.writer.name}`}
+        subheader={
+          publishText.published ? ('published') : ('in-draft')
+        }
       />
       <CardMedia
         className={classes.media}
@@ -137,6 +149,15 @@ const TextCard = (props) => {
           />
       </IconButton> 
       }
+
+      {!publishText.published &&
+      <IconButton aria-label="publish text-item">
+          <PublishRoundedIcon
+          size="small"
+          onClick={() => {handlePublishItem(props.el.id)}}
+          />
+      </IconButton>
+      } 
 
       {props.el.writer_id!==getCurrentUser().id && 
       <IconButton aria-label="add text-item to favorites">
@@ -177,7 +198,7 @@ const TextCard = (props) => {
         </IconButton>
         )
       }
-        
+
       {props.el.writer_id===getCurrentUser().id && 
       <IconButton aria-label="delete text-item">
           <DeleteIcon
