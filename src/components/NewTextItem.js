@@ -85,7 +85,7 @@ const changeHandlerTextItem = (e) => {
             <Box className="new-inspo-page-title" item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
             <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
             <Divider/>
-            { inspoItem.id > 0 ? (<h2>Nice choice {currentUser}!</h2>) : (<h2>Hi {currentUser}! Go to New Inspo before writing.. </h2>) }
+            { inspoItem.id > 0 ? (<h2>Nice choice {currentUser}!</h2>) : (<h2>Hi {currentUser}! You don't have inspo.. </h2>) }
             
             </Box>
                     <Divider/>

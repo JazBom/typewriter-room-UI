@@ -38,15 +38,17 @@ const DisplayInspoItem = (props) => {
                     <Box item xs={12} sm={12} md={12} lg={12}>    
                     
                         <FormControl className={classes.formControl}>
-                        <h5>{props.item.imageOf}</h5> 
-                        <img src={props.item.imageUrl}/>
                         <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center">
                           
                           <h5> "..{props.item.sentence}."  -  {props.item.sentenceOf}</h5>
                     
                         </Box>
+                        <img src={props.item.imageUrl}/>
+                        <h6>{props.item.imageOf}</h6> 
+                        
                         </FormControl>  
                     </Box> 
+                    <Divider/>
               </Box>
          
   )

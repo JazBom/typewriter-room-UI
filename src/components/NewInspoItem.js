@@ -177,7 +177,7 @@ const handleSelectImage = (e) => {
               {/* insp selection  - default flex direction is column */}       
                         <Box item display="flex" flexDirection="row" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12} >
                         <h4> ... roll the </h4>
-                            <Button type="button" variant="contained" color="secondary" size="small" onClick={getRandomInspoItem} xs={3} sm={3} md={2} lg={2}>dice</Button>
+                            <Button type="button" variant="contained" color="secondary" size="small" styles={{margin: "5rem"}} onClick={getRandomInspoItem} xs={3} sm={3} md={2} lg={2}>dice</Button>
                         <h4> for inspo</h4>
                         </Box>
                         <Box className="new-inspo-display" item display="flex" flexDirection="column" justifyContent="space-evenly" xs={12} sm={12} md={6} lg={6}>  
