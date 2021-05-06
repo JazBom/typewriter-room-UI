@@ -104,7 +104,7 @@ const ProtectedLayout = ({ component: Comp, pageTitle, logOut, ...rest }) => {
         <div className={classes.root}>
         <TopBar pageTitle={pageTitle} sideBarOpen={sideBarOpen} onOpenSideBarClick={handleSideBarOpen}/>
         <SideBar sideBarOpen={sideBarOpen} onCloseSideBarClick={handleSideBarClose} logOut={logOut} search={searchBar}/>
-        <Box className={classes.content} flexDirection="row" flexWrap="wrap" justifyContent='center'>
+        <Box className={classes.content} flexDirection="row" flexWrap="wrap" justifyContent="center">
             <Comp {...rest} />
         </Box>
         </div>

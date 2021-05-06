@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { uniq } from "lodash";
 import { useHistory } from "react-router-dom";
-import { Button, Box, TextField, FormHelperText, FormControl, Divider, Grid, InputLabel, makeStyles, NativeSelect } from '@material-ui/core';
-import { postInspoItem, postTextItem, getMyTextItems, getInspoItem } from '../api/capstone-server';
+import { Button, Box, TextField, FormControl, Divider, makeStyles } from '@material-ui/core';
+import { postTextItem, getCurrentUser, getAllTextItems, getMyTextItems, getInspoItem } from '../api/capstone-server';
+import { DisplayInspoItem } from './DisplayInspoItem';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewTextItem = (props) => {
-
+  const currentUser = getCurrentUser().name;
   const classes = useStyles();
   const history = useHistory();
 
@@ -50,8 +50,7 @@ const NewTextItem = (props) => {
           setTextItem({
           ...textItem,
           inspiration_id: props.match.params.id,
-          //change below to get writer id from current user when know how defined
-          writer_id: 2,
+          writer_id: getCurrentUser().id,
       }))
   }, []);
 
@@ -77,33 +76,27 @@ const changeHandlerTextItem = (e) => {
     postTextItem(newPublishTextItem)
     .then(getMyTextItems())
     .then(
-      history.push('/allpages/mypages')
+      getAllTextItems()
       )
 };
 
   return (
           <Box container className={classes.root}>
+            <Box className="new-inspo-page-title" item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
+            <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
+            <Divider/>
+            { inspoItem.id > 0 ? (<h2>Nice choice {currentUser}!</h2>) : (<h2>Hi {currentUser}! Go to New Inspo before writing.. </h2>) }
+            
+            </Box>
                     <Divider/>
-                    <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
-                      <h2>Hi Jess</h2>
-                      <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
-                      { inspoItem.id > 0 ? (<h5>Inspo ref: {inspoItem.id}</h5>) : (<h5></h5>) }
-                    </Box>
+                    <DisplayInspoItem item={inspoItem} />
                     <Divider/>
-                    <Box item xs={12} sm={12} md={12} lg={12}>     
-                        <FormControl className={classes.formControl}>
-                        <img src={inspoItem.imageUrl} alt={inspoItem.imageOf}/>
-                        <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center">
-                          <h3>"..{inspoItem.sentence}."</h3>
-                          <p>{inspoItem.sentenceOf}</p>
-                        </Box>
-                        </FormControl>  
-                    </Box>
 
-                    <Divider/>
-                    <Box item xs={12} sm={12} lg={12}>
+                    <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
+            
+                    <h4>a blank page</h4>
                     <FormControl className={classes.formControl}>
-                                          
+                    
                                               <TextField
                                                 label="Title"
                                                 name="title"
