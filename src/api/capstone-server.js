@@ -14,8 +14,6 @@ const register = (form) => {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            // window.localStorage.setItem('APItoken', data.token);
-            // window.localStorage.setItem('currentUser', JSON.stringify({ id: data.user.id, name: data.user.name }));
             resolve(data);
         })
         .catch((error) => {

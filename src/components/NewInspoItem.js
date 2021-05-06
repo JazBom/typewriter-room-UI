@@ -89,7 +89,6 @@ const handleSelectSentenceOf = (e) => {
             sentenceOf: e.target.value,
           });
           const newSentenceDropDownArray = uniq(masterArray.filter((el) => el.sentenceOf === e.target.value).map(el => el.sentence));
-          console.log(newSentenceDropDownArray);
           setSentenceDropDownArray(newSentenceDropDownArray);
           setInspoItem({
             ...inspoItem,
@@ -112,8 +111,7 @@ const handleSelectImageOf = (e) => {
     setSelectedImageOf({
       imageOf: e.target.value,
     });
-    const newImageDropDownArray = uniq(masterArray.filter((el) => el.imageOf === e.target.value).map(el => el.imageUrl));
-    console.log(newImageDropDownArray);
+    const newImageDropDownArray = uniq(masterArray.filter((el) => el.imageOf === e.target.value).map(el => el.imageUrl));  
     setImageDropDownArray(newImageDropDownArray);
     setInspoItem({
       ...inspoItem,
@@ -127,7 +125,6 @@ const handleSelectImage = (e) => {
     });
     setInspoItem({
       ...inspoItem,
-      
       imageUrl: e.target.value
     })
   };
@@ -155,7 +152,6 @@ const handleSelectImage = (e) => {
   useEffect(() => {
     getAllInspoItems()
     .then((data) => {
-      console.log(data);
       setMasterArray(data);
       setSentenceOfDropDownArray(uniq(data.map(el => el.sentenceOf)));
       setImageOfDropDownArray(uniq(data.map((el) => el.imageOf)));

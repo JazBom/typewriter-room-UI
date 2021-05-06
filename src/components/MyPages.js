@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@material-ui/core";
-import { deleteTextItem, getMyTextItems } from '../api/capstone-server';
+import { getMyTextItems } from '../api/capstone-server';
 import { TextCard } from "./TextCard";
 
 const MyPages = () => {
@@ -8,7 +8,6 @@ const MyPages = () => {
   const [myPagesArray, setMyPagesArray] = useState([]);
 
   useEffect((e) => {
-
   getMyTextItems()
     .then((data) => {
       setMyPagesArray(data);
@@ -20,7 +19,7 @@ const MyPages = () => {
   <Box className="text-item-cards" container display='flex' flexDirection='row' flexWrap='wrap' xs={12} sm={12} md={12} lg={12}>
     {
       myPagesArray.map((el) => {
-        return (<TextCard el={el} refreshPages={getMyTextItems}/>);
+        return (<TextCard el={el} />);
       })
     }       
   </Box>

@@ -1,9 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { uniq } from "lodash";
-import { useHistory} from "react-router-dom";
-import { Button, Box, FormControl, InputLabel, makeStyles, NativeSelect, useTheme } from '@material-ui/core';
+import React from "react";
+import { Box, FormControl, makeStyles } from '@material-ui/core';
 import Divider from "@material-ui/core/Divider";
-import { getCurrentUser, postInspoItem, getAllInspoItems, getAllArtImages, getAllImagesOfArtist, getAnImageOfArtist } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 const DisplayInspoItem = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
-  const history = useHistory();
-  const currentUser = getCurrentUser().name;
 
   return (
           <Box container className={classes.root}>

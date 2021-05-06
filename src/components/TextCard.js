@@ -75,7 +75,6 @@ const TextCard = (props) => {
     
     const changeHandlerEditTextItem = (e) => {
       const newEditedText = {...props.el, text: e.target.value};
-      console.log(newEditedText);
       setEditedText(newEditedText);
       }
 
@@ -110,7 +109,7 @@ const TextCard = (props) => {
       <CardHeader
         avatar={
           <Avatar aria-label="writer avatar" className={classes.avatar}>
-            {props.el.writer.name}
+            <h6>{props.el.writer.name}</h6>
           </Avatar>
         }
         action={

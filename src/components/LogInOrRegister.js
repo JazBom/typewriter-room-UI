@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { Box, Button, Divider, FormControl, InputAdornment, makeStyles, useTheme, TextField } from '@material-ui/core';
+import { Box, Button, Divider, InputAdornment, makeStyles, useTheme, TextField } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { logIn, register } from '../api/capstone-server';
@@ -45,14 +45,12 @@ const LogInOrRegister = () => {
   const changeHandlerRegister = (e) => {
         const newRegisterFormState = {...registerForm};
         newRegisterFormState[e.target.name] = e.target.value;
-        console.log(newRegisterFormState);
         setRegisterForm(newRegisterFormState);
     }
 
   const changeHandlerLogIn = (e) => {
       const newLogInFormState = {...logInForm};
       newLogInFormState[e.target.name] = e.target.value;
-      console.log(newLogInFormState);
       setLogInForm(newLogInFormState);
   }
 
@@ -62,10 +60,13 @@ const LogInOrRegister = () => {
     register(newRegisterFormState)
       .then((response) => {
         console.log(response);
-          // if(response.token) {
-          //     history.replace('/home');
-          // }
+        return logIn(newRegisterFormState)
     })
+    .then((response) => {
+      if(response.token) {
+          history.replace('/home');
+      }
+  })
 }
   const logInHandler = (e) => {
         e.preventDefault();

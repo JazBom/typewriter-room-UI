@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Box, TextField, FormControl, Divider, makeStyles } from '@material-ui/core';
-import { postTextItem, getCurrentUser, getAllTextItems, getMyTextItems, getInspoItem } from '../api/capstone-server';
+import { postTextItem, getCurrentUser, getPublishedTextItems, getMyTextItems, getInspoItem } from '../api/capstone-server';
 import { DisplayInspoItem } from './DisplayInspoItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -41,7 +41,6 @@ const NewTextItem = (props) => {
       })
   
   useEffect(() => {
-    console.log(props);  
     getInspoItem(props.match.params.id)
       .then((data) => {
         setInspoItem(data);  
@@ -57,27 +56,23 @@ const NewTextItem = (props) => {
 const changeHandlerTextItem = (e) => {
     const newTextItemState = {...textItem};
       newTextItemState[e.target.name] = e.target.value;
-      console.log(newTextItemState);
       setTextItem(newTextItemState);
     }
   
   const handleSaveTextItem = () => {
     const newTextItem = {...textItem};
       postTextItem(newTextItem)
-      .then(getMyTextItems())
       .then(
-        history.push('/allpages/mypages')
-        )
+        getMyTextItems()
+        .then(history.push('/allpages/mypages')))
   };
 
   const handlePublishTextItem = () => {
-    const newTextItem = {...textItem};
-    const newPublishTextItem = {...newTextItem, published: true};
+    const newPublishTextItem = {...textItem, published: true};
     postTextItem(newPublishTextItem)
-    .then(getMyTextItems())
     .then(
-      getAllTextItems()
-      )
+      getPublishedTextItems()
+      .then(history.push('/allpages/publishedpages')))
 };
 
   return (
