@@ -103,7 +103,7 @@ const postRating = (newRating) => {
     }
 
 //GET requests
-const get = () => {
+const getLocalAPI = () => {
    return {
         method: "GET",
         headers: {
@@ -111,11 +111,20 @@ const get = () => {
             "Authorization": `Bearer ${window.localStorage.getItem('APItoken')}`
         },
       };
-    
 } 
-  const getAllRatings = () => {
+
+const getExternalAPI = () => {
+    return {
+         method: "GET",
+         headers: {
+             "Content-Type": "application/json",
+         },
+       };
+ } 
+
+const getAllRatings = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/ratings`, get())
+        fetch(`${baseApiUrl}/ratings`, getLocalAPI())
         .then((response) => {
             console.log("GET ratings response", response);
             return response.json();
@@ -131,7 +140,7 @@ const get = () => {
 
 const getMyTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items/my_items`, get())
+        fetch(`${baseApiUrl}/text_items/my_items`, getLocalAPI())
           .then((response) => {
               console.log("GET my text item response", response);
               return response.json();
@@ -147,7 +156,7 @@ const getMyTextItems = () => {
 
 const getPublishedTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items/published`, get())
+        fetch(`${baseApiUrl}/text_items/published`, getLocalAPI())
           .then((response) => {
               console.log("GET published text item response", response);
               return response.json();
@@ -163,7 +172,7 @@ const getPublishedTextItems = () => {
 
 const getAllTextItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/text_items`, get())
+        fetch(`${baseApiUrl}/text_items`, getLocalAPI())
         .then((response) => {
             console.log("GET text item response", response);
             return response.json();
@@ -179,7 +188,7 @@ const getAllTextItems = () => {
 
 const getAllInspoItems = () => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/inspirations`, get())
+        fetch(`${baseApiUrl}/inspirations`, getLocalAPI())
         .then((response) => {
             console.log("GET inspo items response", response);
             return response.json();
@@ -195,7 +204,7 @@ const getAllInspoItems = () => {
 
 const getInspoItem = (inspoItemId) => {
     return new Promise((resolve, reject) => {
-        fetch(`${baseApiUrl}/inspirations/${inspoItemId}`, get())
+        fetch(`${baseApiUrl}/inspirations/${inspoItemId}`, getLocalAPI())
         .then((response) => {
             console.log("GET an inspo item response", response);
             return response.json();
@@ -203,6 +212,41 @@ const getInspoItem = (inspoItemId) => {
             console.log("GET an inspo item", inspoItemData);
             resolve(inspoItemData);
         })
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
+const  getRandomQuote = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`https://type.fit/api/quotes`, getExternalAPI())
+        .then((response) => {
+            console.log("GET all quotes response", response);
+            return response.json();
+        }).then((quotesData) => {
+            console.log("GET all quotess data", quotesData)
+            resolve(quotesData);
+        }) 
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
+const getRandomImage = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`https://179iper8g8.execute-api.ap-southeast-2.amazonaws.com/prod/artist-artworks`, getExternalAPI())
+        .then((response) => {
+            console.log("GET all random artist images response", response);
+            return response.json();
+        }).then((artistImageData) => {
+            const allArtistNames = Object.keys(artistImageData);
+            const randomArtistName = allArtistNames[allArtistNames.length * Math.random() << 0];
+            const randomArtistPaintings = artistImageData[randomArtistName];
+            console.log("GET random artist images data", randomArtistPaintings)
+            resolve({randomArtistName, randomArtistPaintings});
+        }) 
         .catch((error) => {
             reject(error);
         });  
@@ -226,10 +270,10 @@ const put = (data) => {
     return new Promise((resolve, reject) => {
         fetch(`${baseApiUrl}/text_items/${textItem.id}`, put({text_item: {text: textItem.text}}))
           .then((response) => {
-              console.log("EDIT text item response", response);
+              console.log("EDIT-TEXT text item response", response);
               return response.json();
           }).then((textItemData) => {
-              console.log("EDIT text item data", textItemData);
+              console.log("EDIT-TEXT text item data", textItemData);
               resolve(textItemData);
           })
           .catch((error) => {
@@ -237,6 +281,24 @@ const put = (data) => {
           });  
     })
  };
+
+ const publishTextItem = (textItem) => {
+    console.log(textItem);
+   return new Promise((resolve, reject) => {
+       fetch(`${baseApiUrl}/text_items/${textItem.id}/publish`, put({text_item: {published: textItem.published}}))
+         .then((response) => {
+             console.log("EDIT-PUBLISH text item response", response);
+             return response.json();
+         }).then((textItemData) => {
+             console.log("EDIT-PUBLISH text item data", textItemData);
+             resolve(textItemData);
+         })
+         .catch((error) => {
+             reject(error);
+         });  
+   })
+};
+
 
 //DELETE requests
 
@@ -266,4 +328,4 @@ const deleteTextItem = (textItemId) => {
     });
 }; 
 
-export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, editTextItem, deleteTextItem, logIn, logOut, getCurrentUser };
+export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem, logIn, logOut, getCurrentUser };
