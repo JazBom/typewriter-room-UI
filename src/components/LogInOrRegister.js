@@ -3,14 +3,13 @@ import { useHistory } from "react-router";
 import { Box, Button, Divider, FormControl, InputAdornment, makeStyles, useTheme, TextField } from '@material-ui/core';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { logIn } from '../api/capstone-server';
+import { logIn, register } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    // alignContent: 'center',
     },
   formControl: {
     display: 'flex',
@@ -57,6 +56,17 @@ const LogInOrRegister = () => {
       setLogInForm(newLogInFormState);
   }
 
+  const registerHandler = (e) => {
+    e.preventDefault();
+    const newRegisterFormState = {...registerForm};
+    register(newRegisterFormState)
+      .then((response) => {
+        console.log(response);
+          // if(response.token) {
+          //     history.replace('/home');
+          // }
+    })
+}
   const logInHandler = (e) => {
         e.preventDefault();
         logIn(logInForm)
@@ -72,11 +82,13 @@ const LogInOrRegister = () => {
     container
     className={classes.root}
   >
-  <h3>the Typewriter Room</h3>
+  <h2>the Typewriter Room</h2>
   
+  <Divider/>
+  <p></p>
   <h5>Newbies</h5>
-  <form>
   
+  <form onSubmit={registerHandler}>
 <Box className={classes.formControl} style={{margin: '2rem'}}>
 
   
@@ -107,7 +119,7 @@ const LogInOrRegister = () => {
             ),
           }}
         />
-    <Button variant="contained" color="primary" size="small" >Register</Button>
+    <Button type="submit" variant="contained" color="primary" size="small" >Register</Button>
     <Divider/>
     </Box> 
     </form>

@@ -1,6 +1,28 @@
 const baseApiUrl = 'http://localhost:9000/api'
 
-// initial log-in, log-out post request to API
+// initial register, log-in, log-out post request to API
+
+const register = (form) => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/users`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({user: form})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            // window.localStorage.setItem('APItoken', data.token);
+            // window.localStorage.setItem('currentUser', JSON.stringify({ id: data.user.id, name: data.user.name }));
+            resolve(data);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+};
 
 const logIn = (form) => {
     return new Promise((resolve, reject) => {
@@ -328,4 +350,4 @@ const deleteTextItem = (textItemId) => {
     });
 }; 
 
-export { postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem, logIn, logOut, getCurrentUser };
+export { register, logIn, logOut, getCurrentUser, postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem };
