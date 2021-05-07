@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
       minWidth: 300,
       maxWidth: 300,
-      minHeight: 400,
+      minHeight: 430,
+    },
+    cardContent: {
+      minHeight: 80,
     },
     media: {
       height: 0,
@@ -38,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textarea: {
       resize: "both"
-    }
+    },
   }));
 
 const TextCard = (props) => {
@@ -51,9 +54,6 @@ const TextCard = (props) => {
     const [editedText, setEditedText] = React.useState(props.el);
     const [expanded, setExpanded] = React.useState(false);
     const [editing, setEditing] = React.useState(false);
-    //     const cardIcons = () => { 
-    // --> either do this or conditional rendering via JSX
-    // }
     const handleNewRating = (newRatingValue) => {
       const newRating = {
         rating: {
@@ -70,7 +70,10 @@ const TextCard = (props) => {
 
     const handleExpandClick = () => {
       setExpanded(!expanded);
-      if (editing) {setEditing(false)}; 
+      if (editing) {
+        setEditedText(props.el)
+        setEditing(false)
+      }; 
     };
 
     
@@ -104,9 +107,140 @@ const TextCard = (props) => {
       )
     };
 
-    return (
+  const cardActionIcons = (props) => { 
+       if (props.el.writer_id===getCurrentUser().id && publishText.published) {
+          return (
+            <CardActions disableSpacing>
+
+                          <IconButton
+                            className={clsx(classes.expand, {[classes.expandOpen]: expanded})}
+                            onClick={() => {handleExpandClick(props.el)}}
+                            aria-expanded={expanded}
+                            aria-label="show more">
+                                <ExpandMoreIcon/>
+                          </IconButton>
+
+                          <IconButton aria-label="delete text-item">
+                                  <DeleteIcon
+                                  size="small"
+                                  onClick={() => {handleDeleteItem(props.el.id)}}
+                                  />
+                          </IconButton>
+
+                  </CardActions>
+          )
+       } else if(props.el.writer_id===getCurrentUser().id && !publishText.published){
+              if(editing) {
+                return (
+                  <CardActions disableSpacing>
+                  <IconButton
+                  className={clsx(classes.expand, {[classes.expandOpen]: expanded})}
+                  onClick={() => {handleExpandClick(props.el)}}
+                  aria-expanded={expanded}
+                  aria-label="show more">
+                      <ExpandMoreIcon/>
+                </IconButton>
+                
+                  <IconButton aria-label="save text-item">
+                  <SaveIcon 
+                          size="small"
+                          value={editedText}
+                          onClick={
+                          (event, newEditedText) => {
+                          handleSaveEditedItem(newEditedText);}
+                          }
+                        />
+                  </IconButton>
+                  <IconButton aria-label="publish text-item">
+                    <PublishRoundedIcon
+                    size="small"
+                    onClick={() => {handlePublishItem(props.el.id)}}
+                    />
+                </IconButton>
+                  <IconButton aria-label="delete text-item">
+                  <DeleteIcon
+                          size="small"
+                          onClick={() => {handleDeleteItem(props.el.id)}}
+                        />
+                  </IconButton>
+                  </CardActions>
+                  )
+
+              } else if (!editing){
+
+                return (
+                  <CardActions disableSpacing>
+
+                          <IconButton
+                            className={clsx(classes.expand, {[classes.expandOpen]: expanded})}
+                            onClick={() => {handleExpandClick(props.el)}}
+                            aria-expanded={expanded}
+                            aria-label="show more">
+                                <ExpandMoreIcon/>
+                          </IconButton>
+                          <IconButton aria-label="edit text-item">
+                          <EditIcon
+                              size="small"
+                              onClick={handleSelectEditItem}
+                              />
+                          </IconButton>
+                          <IconButton aria-label="publish text-item">
+                              <PublishRoundedIcon
+                              size="small"
+                              onClick={() => {handlePublishItem(props.el.id)}}
+                              />
+                          </IconButton>
+                          <IconButton aria-label="delete text-item">
+                                  <DeleteIcon
+                                  size="small"
+                                  onClick={() => {handleDeleteItem(props.el.id)}}
+                                  />
+                          </IconButton>
+
+                  </CardActions>
+                )
+              } 
+        } else if(props.el.writer_id!==getCurrentUser().id) {
+          return (
+                  <CardActions disableSpacing>
+    
+                        <IconButton aria-label="rate text-item">
+                            <Rating
+                            name={`simple-controlled${props.el.id}`}
+                            precision={0.5}
+                            size="small"
+                            value={defaultRating}
+                            onChange={
+                              (event, newRatingValue) => {
+                                handleNewRating(newRatingValue);}
+                              }
+                            />
+                        </IconButton> 
+    
+                        <IconButton
+                        className={clsx(classes.expand, {[classes.expandOpen]: expanded})}
+                        onClick={() => {handleExpandClick(props.el)}}
+                        aria-expanded={expanded}
+                        aria-label="show more">
+                            <ExpandMoreIcon/>
+                      </IconButton>
+    
+                  </CardActions>
+          
+          )
+        } else {
+          return (
+            <CardActions></CardActions>
+          )
+        }
+  };      
+      
+    
+
+return (
   <Box p={theme.spacing(2)} xs={12} sm={12} md={6} lg={4}>
 <Card key={props.el.id} className={classes.root}>
+  {/* <div className={classes.cardBody}> */}
       <CardHeader
         avatar={
           <Avatar aria-label="writer avatar" className={classes.avatar}>
@@ -128,88 +262,14 @@ const TextCard = (props) => {
         image={props.el.inspiration.imageUrl}
         title={props.el.inspiration.imageOf}
       />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+      <CardContent className={classes.cardContent}>
+        <Typography variant="body2" color="textSecondary" component="p" >
           {props.el.inspiration.sentenceOf}: {props.el.inspiration.sentence}
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
-     
-      {props.el.writer_id!==getCurrentUser().id && 
-      <IconButton aria-label="rate text-item">
-          <Rating
-          name={`simple-controlled${props.el.id}`}
-          precision={0.5}
-          size="small"
-          value={defaultRating}
-          onChange={
-            (event, newRatingValue) => {
-              handleNewRating(newRatingValue);}
-            }
-          />
-      </IconButton> 
-      }
-
-      {!publishText.published &&
-      <IconButton aria-label="publish text-item">
-          <PublishRoundedIcon
-          size="small"
-          onClick={() => {handlePublishItem(props.el.id)}}
-          />
-      </IconButton>
-      } 
-
-      {props.el.writer_id!==getCurrentUser().id && 
-      <IconButton aria-label="add text-item to favorites">
-        <FavoriteIcon/>
-      </IconButton> 
-      }
         
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={() => {handleExpandClick(props.el)}}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-
-        { editing ? (
-        props.el.writer_id===getCurrentUser().id && 
-        <IconButton aria-label="save text-item">
-        <SaveIcon 
-                size="small"
-                value={editedText}
-                onClick={
-                (event, newEditedText) => {
-                handleSaveEditedItem(newEditedText);}
-                }
-              />
-        </IconButton>
-        ) : (
-        props.el.writer_id===getCurrentUser().id && 
-        <IconButton aria-label="edit text-item">
-          <EditIcon
-          size="small"
-          onClick={handleSelectEditItem}
-          />
-        </IconButton>
-        )
-      }
-
-      {props.el.writer_id===getCurrentUser().id && 
-      <IconButton aria-label="delete text-item">
-          <DeleteIcon
-          size="small"
-          onClick={() => {handleDeleteItem(props.el.id)}}
-          />
-      </IconButton>
-      }
-
-      </CardActions>
-
+        {cardActionIcons(props)}
+          
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           {
