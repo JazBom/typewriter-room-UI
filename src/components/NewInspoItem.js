@@ -6,6 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import { getCurrentUser, postInspoItem, getAllInspoItems, getRandomQuote, getRandomImage } from '../api/capstone-server';
 import { DisplayInspoItem } from './DisplayInspoItem';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -25,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
 const NewInspoItem = (props) => {
   const currentUser = getCurrentUser().name;
   const classes = useStyles();
-  const theme = useTheme();
   const history = useHistory();
   const [masterArray, setMasterArray] = useState([]);
   const [inspoItem, setInspoItem] = useState({
@@ -54,13 +54,7 @@ const NewInspoItem = (props) => {
   const [imageOfDropDownArray, setImageOfDropDownArray] = useState([]);
   const [imageDropDownArray, setImageDropDownArray] = useState([]);
 
-  // const selectRandomId = (array) => {
-  //   return Math.floor(Math.random() * array.length)
-  //     };
-
-  const getRandomInspoItem = () => {
-    //call both APIs, set inspo item based on API data
-    // render DisplayInspoItem with inspo item props in NewTextItem
+  const getRandomAPIInspoItem = () => {
     let randomSentenceAuthor;
     let randomSentenceText;
     getRandomQuote()
@@ -159,12 +153,12 @@ const handleSelectImage = (e) => {
   }, []);
 
   return (
-  <Box container className={classes.root}>
+  <Box container className={classes.root}  zIndex="inherit">
    {/* container - default flex direction is column */}
             <Box className="new-inspo-page-title" item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
             <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
             <Divider/>
-            <h2>Hi {currentUser}, let's get started.</h2>
+            <h2>Good one {currentUser}</h2>
             </Box>
    {/* container - default flex direction is column */}
             <Box className="inspo-selection-and-display" item display="flex" flexDirection="row" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12}>  
@@ -172,16 +166,16 @@ const handleSelectImage = (e) => {
                     <Box className="new-inspo-selection" item display="flex" flexDirection="column" alignItems="center" xs={12} sm={12} md={6} lg={6}>   
               {/* insp selection  - default flex direction is column */}       
                         <Box item display="flex" flexDirection="row" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12} >
-                        <h4> ... roll the </h4>
-                            <Button type="button" variant="contained" color="secondary" size="small" styles={{margin: "5rem"}} onClick={getRandomInspoItem} xs={3} sm={3} md={2} lg={2}>dice</Button>
-                        <h4> for inspo</h4>
+                        <h4> .. roll the </h4>
+                            <Button type="button" variant="contained" color="secondary" size="small" styles={{margin: "5rem"}} onClick={getRandomAPIInspoItem} xs={3} sm={3} md={2} lg={2}>dice</Button>
+                        <h4> for inspo </h4>
                         </Box>
                         <Box className="new-inspo-display" item display="flex" flexDirection="column" justifyContent="space-evenly" xs={12} sm={12} md={6} lg={6}>  
                     {/* insp display  - default flex direction is column */}          
                             <DisplayInspoItem item={inspoItem}/>
                     </Box>                  
                         <Box item display="flex" flexDirection="column" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12}>
-                        <h4>or pick something yourself </h4>
+                        <h4>or pick something yourself : </h4>
                             <FormControl className={classes.formControl}>
                             <InputLabel htmlFor="sentenceOf-native-helper">Who said it?</InputLabel>
                                   <NativeSelect

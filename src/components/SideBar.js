@@ -56,9 +56,6 @@ const SideBar = (props) => {
                 <ListItem button component={RouterLink} to="/home" key="Home">
                     <ListItemText primary="Home"/>
                 </ListItem>
-                <ListItem button component={RouterLink} to="/allpages" key="AllPages">
-                    <ListItemText primary="All Pages"/>
-                </ListItem>
                 <ListItem button component={RouterLink} to="/allpages/publishedpages" key="PublishedPages">
                     <ListItemText primary="Published Pages"/>
                 </ListItem>

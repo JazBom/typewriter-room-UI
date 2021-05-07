@@ -5,8 +5,8 @@ const Footer = () => {
 
   return (
     <div className="footer">
-    <Box styles={{padding: "10rem", zIndex: "100"}}>
-      {/* <h5>Designed and Built by Jess Bommer</h5> */}
+    <Box style={{backgroundColor: '#F7F4F3', zIndex: '0'}}>
+      {/* <h5>Designed and Built by Jess Bommer</h5> put in padding */}
       </Box>
     </div> 
   );

@@ -196,6 +196,24 @@ const getPublishedTextItems = () => {
     });
 }; 
 
+
+const getRandomPublishedTextItem = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/text_items/published`, getLocalAPI())
+          .then((response) => {
+            console.log("GET random published text item response", response);
+              return response.json();
+        }).then((publishedTextItemData) => {
+            const randomPublishedTextItem = publishedTextItemData[Math.floor(Math.random() * publishedTextItemData.length)];
+            console.log("GET random published text item", randomPublishedTextItem);
+            resolve(randomPublishedTextItem);
+        })
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
 const getAllTextItems = () => {
     return new Promise((resolve, reject) => {
         fetch(`${baseApiUrl}/text_items`, getLocalAPI())
@@ -244,6 +262,23 @@ const getInspoItem = (inspoItemId) => {
     });
 };
 
+const getRandomInspoItem = () => {
+    return new Promise((resolve, reject) => {
+        fetch(`${baseApiUrl}/inspirations`, getLocalAPI())
+        .then((response) => {
+            console.log("GET random inspo item response", response);
+            return response.json();
+        }).then((inspoItemData) => {
+            const randomInspoItem = inspoItemData[Math.floor(Math.random() * inspoItemData.length)]
+            console.log("GET random inspo item", randomInspoItem);
+            resolve(randomInspoItem);
+        })
+        .catch((error) => {
+            reject(error);
+        });  
+    });
+};
+
 const  getRandomQuote = () => {
     return new Promise((resolve, reject) => {
         fetch(`https://type.fit/api/quotes`, getExternalAPI())
@@ -251,7 +286,7 @@ const  getRandomQuote = () => {
             console.log("GET all quotes response", response);
             return response.json();
         }).then((quotesData) => {
-            console.log("GET all quotess data", quotesData)
+            console.log("GET all quotes data", quotesData)
             resolve(quotesData);
         }) 
         .catch((error) => {
@@ -354,4 +389,4 @@ const deleteTextItem = (textItemId) => {
     });
 }; 
 
-export { isLoggedIn, register, logIn, logOut, getCurrentUser, postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem };
+export { isLoggedIn, register, logIn, logOut, getCurrentUser, postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getRandomPublishedTextItem, getAllTextItems, getAllInspoItems, getInspoItem, getRandomInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem };

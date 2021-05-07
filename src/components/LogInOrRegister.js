@@ -4,13 +4,24 @@ import { Box, Button, Divider, InputAdornment, makeStyles, useTheme, TextField }
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { logIn, register } from '../api/capstone-server';
+import Image from '../assets/old-typewriter-vintage-paper.jpg';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    margin: theme.spacing(15),
+    background: `url(${Image})`,
     },
+  paperContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    background: 'white',
+    width: 400,
+    
+  },
   formControl: {
     display: 'flex',
     flexDirection: 'row',
@@ -83,6 +94,7 @@ const LogInOrRegister = () => {
     container
     className={classes.root}
   >
+  <div className={classes.paperContainer}>  
   <h2>the Typewriter Room</h2>
   
   <Divider/>
@@ -120,7 +132,7 @@ const LogInOrRegister = () => {
             ),
           }}
         />
-    <Button type="submit" variant="contained" color="primary" size="small" >Register</Button>
+    <Button type="submit" variant="outlined" color="secondary" size="small">Register</Button>
     <Divider/>
     </Box> 
     </form>
@@ -160,11 +172,11 @@ const LogInOrRegister = () => {
             ),
           }}
         />
-        <Button type="submit" variant="contained" color="primary" size="small">Log-in</Button>
+        <Button type="submit" variant="outlined" color="secondary" size="small">Log-in</Button>
     </Box>
     </form>
     <h5>Get typing...</h5>
-    
+  </div>  
   </Box>   
   );
 };

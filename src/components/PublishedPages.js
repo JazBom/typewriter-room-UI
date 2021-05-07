@@ -4,7 +4,9 @@ import { getPublishedTextItems } from '../api/capstone-server'
 import { TextCard } from "./TextCard";
 
 const PublishedPages = () => {
+
   const [publishedPagesArray, setPublishedPagesArray] = useState([]);
+
   useEffect(() => {
     getPublishedTextItems()
     .then((data) => {
@@ -13,7 +15,7 @@ const PublishedPages = () => {
   }, []);
    
     return(
-      <Box className="allpages" container width='91.5%' >
+      <Box className="published-pages" container width='91.5%' >
         <Box className="text-item-cards" container display='flex' flexDirection='row' flexWrap='wrap' xs={12} sm={12} md={12} lg={12}>
           {
             publishedPagesArray.map((el) => {

@@ -3,7 +3,7 @@ import { Route, useHistory, Redirect } from "react-router-dom";
 import { ProtectedLayout } from "./ProtectedLayout";
 import { logOut, isLoggedIn  } from "../api/capstone-server";
 
-const ProtectedRoute = ({ component: Comp, path, pageTitle, ...rest }) => {
+const ProtectedRoute = ({ component: Comp, path, pageTitle, currentUser, ...rest }) => {
 
   const history = useHistory();
   const logOutHandler = (e) => {
@@ -22,6 +22,7 @@ const ProtectedRoute = ({ component: Comp, path, pageTitle, ...rest }) => {
             component={Comp} 
             logOut={logOutHandler}
             pageTitle={pageTitle}
+            currentUser={currentUser}
             {...props} 
             /> 
           : <Redirect to="/" />

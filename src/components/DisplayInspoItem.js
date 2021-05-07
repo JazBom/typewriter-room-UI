@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DisplayInspoItem = (props) => {
-  const classes = useStyles();
+const classes = useStyles();
 
   return (
           <Box container className={classes.root}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box,  InputBase, fade, makeStyles } from "@material-ui/core";
+import { Box,  InputBase, makeStyles } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import { SideBar, sideBarWidth } from './SideBar';
 import { TopBar } from './TopBar';
@@ -38,10 +38,6 @@ const useStyles = makeStyles((theme) => ({
       },
       search: {
         position: 'relative',
-        // backgroundColor: fade(theme.palette.common.white, 0.15),
-        // '&:hover': {
-        //   backgroundColor: fade(theme.palette.common.white, 0.25),
-        // },
         marginLeft: 2,
         width: '100%',
         [theme.breakpoints.up('sm')]: {

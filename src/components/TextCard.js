@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Fade, IconButton, makeStyles, useTheme, TextareaAutosize } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
 import PublishRoundedIcon from '@material-ui/icons/PublishRounded';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import SaveIcon from '@material-ui/icons/Save';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -15,6 +14,7 @@ import { getCurrentUser, deleteTextItem, editTextItem, publishTextItem, postRati
 
 const useStyles = makeStyles((theme) => ({
     root: {
+      backgroundColor: 'rgba(247,244,243,0.75)',
       minWidth: 300,
       maxWidth: 300,
       minHeight: 430,
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const TextCard = (props) => {
-    const currentUser = getCurrentUser().id;
+    const currentUserId = getCurrentUser().id;
     const classes = useStyles();  
     const history = useHistory();
     const theme = useTheme();
@@ -59,7 +59,7 @@ const TextCard = (props) => {
         rating: {
           text_item_id: props.el.id,
           rating: newRatingValue,
-          rater_id: currentUser,
+          rater_id: currentUserId,
         }
       }
       postRating(newRating)
@@ -108,7 +108,7 @@ const TextCard = (props) => {
     };
 
   const cardActionIcons = (props) => { 
-       if (props.el.writer_id===getCurrentUser().id && publishText.published) {
+       if (props.el.writer_id===currentUserId && publishText.published) {
           return (
             <CardActions disableSpacing>
 
@@ -129,7 +129,7 @@ const TextCard = (props) => {
 
                   </CardActions>
           )
-       } else if(props.el.writer_id===getCurrentUser().id && !publishText.published){
+       } else if(props.el.writer_id===currentUserId && !publishText.published){
               if(editing) {
                 return (
                   <CardActions disableSpacing>
@@ -200,7 +200,7 @@ const TextCard = (props) => {
                   </CardActions>
                 )
               } 
-        } else if(props.el.writer_id!==getCurrentUser().id) {
+        } else if(props.el.writer_id!==currentUserId) {
           return (
                   <CardActions disableSpacing>
     
@@ -239,7 +239,7 @@ const TextCard = (props) => {
 
 return (
   <Box p={theme.spacing(2)} xs={12} sm={12} md={6} lg={4}>
-<Card key={props.el.id} className={classes.root}>
+<Card key={props.el.id} className={classes.root} >
   {/* <div className={classes.cardBody}> */}
       <CardHeader
         avatar={
