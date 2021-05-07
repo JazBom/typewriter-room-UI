@@ -52,6 +52,12 @@ const getCurrentUser = () => {
     return JSON.parse(window.localStorage.getItem('currentUser'));
 }
 
+const isLoggedIn = () => {
+    const user = window.localStorage.getItem('currentUser');
+    const token = window.localStorage.getItem('APItoken');
+    return user && token;
+};
+
 // other POST requests
 const post = (data) => {
     return {
@@ -348,4 +354,4 @@ const deleteTextItem = (textItemId) => {
     });
 }; 
 
-export { register, logIn, logOut, getCurrentUser, postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem };
+export { isLoggedIn, register, logIn, logOut, getCurrentUser, postInspoItem, postTextItem, postRating, getAllRatings, getMyTextItems, getPublishedTextItems, getAllTextItems, getAllInspoItems, getInspoItem, getRandomQuote, getRandomImage, editTextItem, publishTextItem, deleteTextItem };
