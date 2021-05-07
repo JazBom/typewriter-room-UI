@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, IconButton, makeStyles, useTheme, TextareaAutosize } from "@material-ui/core";
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Collapse, Fade, IconButton, makeStyles, useTheme, TextareaAutosize } from "@material-ui/core";
 import Rating from '@material-ui/lab/Rating';
 import PublishRoundedIcon from '@material-ui/icons/PublishRounded';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const TextCard = (props) => {
+    const currentUser = getCurrentUser().id;
     const classes = useStyles();  
     const history = useHistory();
     const theme = useTheme();
@@ -50,15 +51,15 @@ const TextCard = (props) => {
     const [editedText, setEditedText] = React.useState(props.el);
     const [expanded, setExpanded] = React.useState(false);
     const [editing, setEditing] = React.useState(false);
-//     const cardIcons = () => { 
-// }
+    //     const cardIcons = () => { 
+    // --> either do this or conditional rendering via JSX
+    // }
     const handleNewRating = (newRatingValue) => {
       const newRating = {
         rating: {
           text_item_id: props.el.id,
           rating: newRatingValue,
-          //update ID to be current-user - check in local storage
-          rater_id: 2
+          rater_id: currentUser,
         }
       }
       postRating(newRating)
