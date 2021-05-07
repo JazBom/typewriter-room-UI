@@ -33,9 +33,7 @@ const DisplayInspoItem = (props) => {
                     
                         <FormControl className={classes.formControl}>
                         <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center">
-                          
-                          <h5> "..{props.item.sentence}."  -  {props.item.sentenceOf}</h5>
-                    
+                        { props.item.imageOf || props.item.imageUrl ? (<h5>"..{props.item.sentence}."  -  {props.item.sentenceOf}</h5>) : (<h5></h5>) }
                         </Box>
                         <img src={props.item.imageUrl}/>
                         <h6>{props.item.imageOf}</h6> 
