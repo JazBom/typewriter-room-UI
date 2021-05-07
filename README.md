@@ -7,6 +7,14 @@
 A mobile and desktop app for the writing community which allows users to create, edit, publish and share text snippets (referred to as 'pages') in response to random or selected inspiration in the form of images and quotes. 
 
 Front-end built in ReactJS with Bootstrap, back-end built using Ruby-on-Rails with Postgres SQL database. Material UI and CSS make it fully responsive.
+___________________________________________________________________________________________________________________________________________________________
+
+Tablet view:
+
+![Screen Shot 2021-05-07 at 6 08 28 pm](https://user-images.githubusercontent.com/65477570/117420297-c9112f80-af60-11eb-9fe6-5671b202a9b1.png)
+
+___________________________________________________________________________________________________________________________________________________________
+
 
 Four local APIs create and access data stored in postgres through CRUD functionality and via a Ruby-on-Rails backend server. The configuration of the database tables make use of SQL entity association. 
 
@@ -17,20 +25,30 @@ Users can view and rate all published pages, or can view their own published and
 User registration and log-in functionality includes protected routes using JWT token, including checking of log-in generated token by API when data is called, and loggedIn function invoked by children components to check the existance in local storage of the JWT token.
 ___________________________________________________________________________________________________________________________________________________________
 
-___________________________________________________________________________________________________________________________________________________________
+Mobile-view of inspiration creation:
+
+![Screen Shot 2021-05-07 at 6 09 55 pm](https://user-images.githubusercontent.com/65477570/117420415-ecd47580-af60-11eb-824a-15fb5347fc0e.png)
+![Screen Shot 2021-05-07 at 6 11 11 pm](https://user-images.githubusercontent.com/65477570/117420491-fd84eb80-af60-11eb-8cc7-104d9e7e4787.png)
+
+Mobile-view of page creation:
+
+![Screen Shot 2021-05-07 at 6 12 42 pm](https://user-images.githubusercontent.com/65477570/117420505-ffe74580-af60-11eb-9fdf-d9c99142e3b0.png)
+![Screen Shot 2021-05-07 at 7 51 59 pm](https://user-images.githubusercontent.com/65477570/117432503-cc5ee800-af6d-11eb-8f9e-53efbb99f829.png)
+
+______________________________________________________________________________________________________________________________________________________
 
 
 **Current app issues**
 
-Login - Password security will be enhanced using salting techniques and time-limiting JWT, with a blacklist table to be created for used tokens. 
+Login - Password security will be enhanced by time-limiting the JWTs and creating a blacklist table for expired JWT. 
 
 **Future plans**
 
-In the short term I plan to add more helper/support text and pop-ups (e.g. button tooltips, double-check before delete action etc) light-boxes or open-in-browser option for images, and expansion of the user profile to allow image upload to avatar. 
+I plan to add more helper/support text and pop-ups (e.g. button tooltips, double-check before delete action etc) light-boxes or open-in-browser option for images, and expansion of the user profile to allow image upload to avatar. 
 
-I will also integrate filtering and/or search functions to allow saving and searching for inspiration items and pages by ID and parameters (e.g. quote, author of quote, image category, writer of page etc), and in the longer term more expanded functionality including search of pages text in the database and use of a search toolbar in the UI.
+I also aim to better integrate filtering and/or search functions to allow saving and searching for inspiration items and pages by ID and parameters (e.g. quote, author of quote, image category, writer of page etc).
 
-Ultimately I would like to extend user interactions to include messages, and allow users to upload their own images and text for the inspiration items. This also involves consideration of issues beyond the tech-stack such as moderation, user privacy and standard of care owed by the app developer.
+I would like to extend user interactions to include messages, and allow users to upload their own images and text for the inspiration items. This involves more complexity and consideration of issues beyond the tech-stack, such as moderation, user privacy and standard of care owed by the app developer, so it is likely to be a long term goal.
 
 **Install instructions**
 
