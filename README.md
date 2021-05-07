@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# GENERAL
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# The Typewriter Room App - typewriter-room-UI (for client, see 'typewriter-room-API')
 
-## Available Scripts
+**Overview**
 
-In the project directory, you can run:
+A mobile and desktop app for the writing community which allows users to create, edit, publish and share text snippets (referred to as 'pages') in response to random or selected inspiration in the form of images and quotes. 
 
-### `npm start`
+Front-end built in ReactJS with Bootstrap, back-end built using Ruby-on-Rails with Postgres SQL database. Material UI and CSS make it fully responsive.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Four local APIs create and access data stored in postgres through CRUD functionality and via a Ruby-on-Rails backend server. The configuration of the database tables make use of SQL entity association. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The database includes an inspiration table, which the API passes back to the client to populate a drop-down menu allowing users to select their combination of image and quote for inspiration. Two external APIs are also integrated, which allows random inspiration objects to be generated and saved back to the inspiration table.
 
-### `npm test`
+Users can view and rate all published pages, or can view their own published and in-draft pages. They can edit, save, publish and delete their own pages. Users cannot see in-draft pages of others. They are prevented from rating their own text snippets, and from editing or deleting those of others.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+User registration and log-in functionality includes protected routes using JWT token, including checking of log-in generated token by API when data is called, and loggedIn function invoked by children components to check the existance in local storage of the JWT token.
+___________________________________________________________________________________________________________________________________________________________
 
-### `npm run build`
+___________________________________________________________________________________________________________________________________________________________
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Current app issues**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Login - Password security will be enhanced using salting techniques and time-limiting JWT, with a blacklist table to be created for used tokens. 
 
-### `npm run eject`
+**Future plans**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+In the short term I plan to add more helper/support text and pop-ups (e.g. button tooltips, double-check before delete action etc) light-boxes or open-in-browser option for images, and expansion of the user profile to allow image upload to avatar. 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+I will also integrate filtering and/or search functions to allow saving and searching for inspiration items and pages by ID and parameters (e.g. quote, author of quote, image category, writer of page etc), and in the longer term more expanded functionality including search of pages text in the database and use of a search toolbar in the UI.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Ultimately I would like to extend user interactions to include messages, and allow users to upload their own images and text for the inspiration items. This also involves consideration of issues beyond the tech-stack such as moderation, user privacy and standard of care owed by the app developer.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**Install instructions**
 
-## Learn More
+PREREQUISITES
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+NodeJS v15.11.0
+Ruby v2.6.6
+Rails
+Postgres
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+SET-UP
 
-### Code Splitting
+Once cloned, start a terminal for both the client (cd capstone-client) and server (cd capstone-server) folders. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Run the following commands in the terminal for each respectively:
 
-### Analyzing the Bundle Size
+(1) Server
+- bundle install (downloads the necessary dependencies from the file 'Gemfile')
+- rails db:create (creates the migrate file with parameters for databases and tables based on models in the code)
+- rails db:migrate (creates the databases and tables in the database Postgres, based on the migration just created)
+- rails db:seed (seeds the user data so you can log-in without registering, though you could also register)
+- rails s (to start the server at http://localhost:9000)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+(2) Client
+- npm install (downloads the necessary dependencies from the file 'package.json')
+- npm start (to start the client at http://localhost:3000)
 
-### Making a Progressive Web App
+Together this should start the app, with full-stack functionality, in the browser at http://localhost:3000.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Make sure you are logged-in to postgres. You may also wish to download and open your favourite postgres interface, such as Postico, to view the databases and tables directly or use SQL to update and/or query it directly.
 
-### Advanced Configuration
+___________________________________________________________________________________________________________________________________________________________
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
