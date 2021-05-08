@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     margin: theme.spacing(15),
     background: `url(${Image})`,
+    borderRadius: '5rem'
     },
   paperContainer: {
     display: 'flex',

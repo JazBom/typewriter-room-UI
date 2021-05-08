@@ -14,7 +14,7 @@ import { getCurrentUser, getMyTextItems, deleteTextItem, editTextItem, publishTe
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      // backgroundColor: 'rgba(247,244,243,0.75)',
+      backgroundColor: 'rgba(247,244,243,0.75)',
       minWidth: 300,
       maxWidth: 300,
       minHeight: 430,
