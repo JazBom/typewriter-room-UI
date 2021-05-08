@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Box, TextField, FormControl, Divider, makeStyles } from '@material-ui/core';
+import { Button, Box, Collapse, Divider, IconButton, InputLabel, TextField, FormControl, makeStyles, NativeSelect, useTheme } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
 import { postTextItem, getCurrentUser, getPublishedTextItems, getMyTextItems, getInspoItem } from '../api/capstone-server';
 import { DisplayInspoItem } from './DisplayInspoItem';
 
@@ -24,7 +26,7 @@ const NewTextItem = (props) => {
   const currentUser = getCurrentUser().name;
   const classes = useStyles();
   const history = useHistory();
-
+  const [open, setOpen] = useState(false);
   const [inspoItem, setInspoItem] = useState({
       id: 0,
       sentence: '',
@@ -81,7 +83,27 @@ const changeHandlerTextItem = (e) => {
             <img src="https://i.imgur.com/bxUQAmvs.png?1"/>
             <Divider/>
             { inspoItem.id > 0 ? (<h2>Nice choice {currentUser}!</h2>) : (<h2>Get inspo first {currentUser}?</h2>) }
-            
+            { inspoItem.id === undefined && 
+           <Collapse in={open}>
+           <Alert
+           severity="error"
+             action={
+               <IconButton
+                 aria-label="close"
+                 color="inherit"
+                 size="small"
+                 onClick={() => {
+                   setOpen(false);
+                 }}
+               >
+                 <CloseIcon fontSize="inherit" />
+               </IconButton>
+             }
+           >
+             <strong>Error</strong> inspo didn't save, all inputs selected?
+           </Alert>
+         </Collapse>
+            }
             </Box>
                     <Divider/>
                     <DisplayInspoItem item={inspoItem} />

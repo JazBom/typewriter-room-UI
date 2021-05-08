@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { uniq, random } from "lodash";
 import { useHistory} from "react-router-dom";
-import { Button, Box, FormControl, InputLabel, makeStyles, NativeSelect, useTheme } from '@material-ui/core';
-import Divider from "@material-ui/core/Divider";
+import { Box, Button, Collapse, Divider, IconButton, InputLabel, FormControl, makeStyles, NativeSelect, useTheme } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
 import { getCurrentUser, postInspoItem, getAllInspoItems, getRandomQuote, getRandomImage } from '../api/capstone-server';
 import { DisplayInspoItem } from './DisplayInspoItem';
+import { SettingsInputComponent } from "@material-ui/icons";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -27,6 +29,7 @@ const NewInspoItem = (props) => {
   const currentUser = getCurrentUser().name;
   const classes = useStyles();
   const history = useHistory();
+  const [open, setOpen] = React.useState(false);
   const [masterArray, setMasterArray] = useState([]);
   const [inspoItem, setInspoItem] = useState({
         id: 0,
@@ -131,7 +134,17 @@ const handleSelectImage = (e) => {
         ...inspoItem,
         id: createdInspoItem.id,
         });
-        history.push(`/allpages/mypages/new-inspo/${createdInspoItem.id}`)
+      // right now if undefined still pushing to this page
+        history.push(`/allpages/mypages/new-inspo/${createdInspoItem.id}`);
+        if(createdInspoItem.id === 'undefined'){
+          setOpen(true);
+        }
+    })
+    .catch((error) => {
+      console.log(error);
+      if(inspoItem === 'undefined'){
+        setOpen(true);
+      }
     })
   };
   
@@ -139,7 +152,17 @@ const handleSelectImage = (e) => {
     e.preventDefault();
     postInspoItem(inspoItem)
     .then((createdInspoItem) => {
-      history.push(`/allpages/mypages/new-page/inspo-item/${createdInspoItem.id}`)
+      // right now if undefined still pushing to this page
+      history.push(`/allpages/mypages/new-page/inspo-item/${createdInspoItem.id}`);
+      if(createdInspoItem.id === 'undefined'){
+        setOpen(true);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      if(inspoItem === 'undefined'){
+        setOpen(true);
+      }
     })
   };
 
@@ -171,7 +194,31 @@ const handleSelectImage = (e) => {
                         <h4> for inspo </h4>
                         </Box>
                         <Box className="new-inspo-display" item display="flex" flexDirection="column" justifyContent="space-evenly" xs={12} sm={12} md={6} lg={6}>  
-                    {/* insp display  - default flex direction is column */}          
+                    {/* insp display  - default flex direction is column */}  
+                            { open ? (
+                              <Collapse in={open}>
+                              <Alert
+                              severity="error"
+                                action={
+                                  <IconButton
+                                    aria-label="close"
+                                    color="inherit"
+                                    size="small"
+                                    onClick={() => {
+                                      setOpen(false);
+                                    }}
+                                  >
+                                    <CloseIcon fontSize="inherit" />
+                                  </IconButton>
+                                }
+                              >
+                                <strong>Error</strong> inspo didn't save, all inputs selected?
+                              </Alert>
+                            </Collapse>
+                            ) : (
+                              <div></div>
+                              ) 
+                              }        
                             <DisplayInspoItem item={inspoItem}/>
                     </Box>                  
                         <Box item display="flex" flexDirection="column" justifyContent="space-evenly" xs={12} sm={12} md={12} lg={12}>

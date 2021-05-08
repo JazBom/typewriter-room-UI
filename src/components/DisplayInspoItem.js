@@ -1,6 +1,7 @@
 import React from "react";
-import { Box, FormControl, makeStyles } from '@material-ui/core';
-import Divider from "@material-ui/core/Divider";
+import { Box, Button, Collapse, Divider, IconButton, FormControl, makeStyles } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   root: {
