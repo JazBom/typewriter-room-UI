@@ -76,7 +76,6 @@ const TextCard = (props) => {
       }; 
     };
 
-    
     const changeHandlerEditTextItem = (e) => {
       const newEditedText = {...props.el, text: e.target.value};
       setEditedText(newEditedText);

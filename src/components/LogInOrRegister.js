@@ -38,16 +38,15 @@ const useStyles = makeStyles((theme) => ({
 
 const LogInOrRegister = () => {
 
-  
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
-
+  const [registerErrorVisible, setRegisterErrorVisible] = useState(false);
+  const [logInErrorVisible, setLogInErrorVisible] = useState(false);
   const [registerForm, setRegisterForm] = useState({
       name: '',
       password: ''
       })
-  
   const [logInForm, setLogInForm] = useState({
         name: '',
         password: ''
@@ -78,16 +77,30 @@ const LogInOrRegister = () => {
           history.replace('/home');
       }
   })
+  .catch((error) => {
+    console.log('error registering:', error);
+    setRegisterErrorVisible(true);
+})
 }
-  const logInHandler = (e) => {
+
+const logInHandler = (e) => {
         e.preventDefault();
         logIn(logInForm)
         .then((response) => {
             if(response.token) {
                 history.replace('/home');
+            } else {
+              history.replace('/');
+                setLogInErrorVisible(true)
             }
         })
-    }
+        .catch((error) => {
+          console.log('error logging in:', error);
+          history.replace('/');
+          setLogInErrorVisible(true);
+   
+    })
+  }
 
   return (
     <Box
@@ -98,9 +111,8 @@ const LogInOrRegister = () => {
   <h2>the Typewriter Room</h2>
   
   <Divider/>
-  <p></p>
-  <h5>Newbies</h5>
-  
+  { registerErrorVisible ? (<><h5 style={{color: 'red', fontWeight: "700"}}>Did not register</h5><h6 style={{fontWeight: "400"}}>HINT: Did you complete all fields? Does user already exist?</h6></>) : (<h5>Newbies</h5>) }
+
   <form onSubmit={registerHandler}>
 <Box className={classes.formControl} style={{margin: '2rem'}}>
 
@@ -175,7 +187,7 @@ const LogInOrRegister = () => {
         <Button type="submit" variant="outlined" color="secondary" size="small">Log-in</Button>
     </Box>
     </form>
-    <h5>Get typing...</h5>
+  { logInErrorVisible ? (<><h5 style={{color: 'red', fontWeight: "700"}} > Unable to log-in.</h5><h6 style={{fontWeight: "400"}}>HINT: You can register above. Passwords are case-sensitive</h6></>) : (<h5>Get typing...</h5>) }
   </div>  
   </Box>   
   );
