@@ -7,7 +7,7 @@
 
 A mobile and desktop app for the writing community which allows users to create, edit, publish and share text snippets (referred to as 'pages') in response to random or selected inspiration in the form of images and quotes. 
 
-Front-end built in ReactJS with Bootstrap, back-end built using Ruby-on-Rails with Postgres SQL database. Material UI and CSS make it fully responsive.
+Front-end built in ReactJS with Material UI, back-end built using Ruby-on-Rails with Postgres SQL database. Material UI and CSS make it fully responsive.
 ___________________________________________________________________________________________________________________________________________________________
 
 Tablet view:
