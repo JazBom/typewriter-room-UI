@@ -61,6 +61,12 @@ const App = () => {
          />
 
           <ProtectedRoute 
+          path="/allpages/mypages/delete-page/:id"
+          component={MyPages}
+          pageTitle="My Pages"
+         />
+
+          <ProtectedRoute 
           path="/allpages/mypages"
           component={MyPages}
           pageTitle="My Pages"
