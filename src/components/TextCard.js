@@ -10,11 +10,11 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import { getCurrentUser, deleteTextItem, editTextItem, publishTextItem, postRating } from '../api/capstone-server';
+import { getCurrentUser, getMyTextItems, deleteTextItem, editTextItem, publishTextItem, postRating } from '../api/capstone-server';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      backgroundColor: 'rgba(247,244,243,0.75)',
+      // backgroundColor: 'rgba(247,244,243,0.75)',
       minWidth: 300,
       maxWidth: 300,
       minHeight: 430,
@@ -101,9 +101,9 @@ const TextCard = (props) => {
 
     const handleDeleteItem = () => {
       deleteTextItem(props.el.id)
-      .then(      
-        history.push('/allpages/mypages')
-      )
+      .then(
+        history.push(`/allpages/publishedpages`)
+        )
     };
 
   const cardActionIcons = (props) => { 
