@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { Box, Button, Divider, InputAdornment, makeStyles, useTheme, TextField } from '@material-ui/core';
+import { Box, Button, Collapse, Divider, IconButton, InputAdornment, makeStyles, useTheme, TextField } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import CloseIcon from '@material-ui/icons/Close';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { logIn, register } from '../api/capstone-server';
@@ -41,6 +43,7 @@ const LogInOrRegister = () => {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
+  const [open, setOpen] = React.useState(true);
   const [registerErrorVisible, setRegisterErrorVisible] = useState(false);
   const [logInErrorVisible, setLogInErrorVisible] = useState(false);
   const [registerForm, setRegisterForm] = useState({
@@ -80,6 +83,7 @@ const LogInOrRegister = () => {
   .catch((error) => {
     console.log('error registering:', error);
     setRegisterErrorVisible(true);
+    // setOpen(true); -> opens both login and register alert, need unique one
 })
 }
 
@@ -96,9 +100,8 @@ const logInHandler = (e) => {
         })
         .catch((error) => {
           console.log('error logging in:', error);
-          history.replace('/');
           setLogInErrorVisible(true);
-   
+          // setOpen(true); -> opens both login and register alert, need unique one
     })
   }
 
@@ -111,7 +114,32 @@ const logInHandler = (e) => {
   <h2>the Typewriter Room</h2>
   
   <Divider/>
-  { registerErrorVisible ? (<><h5 style={{color: 'red', fontWeight: "700"}}>Did not register</h5><h6 style={{fontWeight: "400"}}>HINT: Did you complete all fields? Does user already exist?</h6></>) : (<h5>Newbies</h5>) }
+  { 
+  registerErrorVisible ? (
+  <div><Collapse in={open}>
+  <Alert
+  severity="error"
+    action={
+      <IconButton
+        aria-label="close"
+        color="inherit"
+        size="small"
+        onClick={() => {
+          setOpen(false);
+        }}
+      >
+        <CloseIcon fontSize="inherit" />
+      </IconButton>
+    }
+  >
+    <strong>Error</strong> not registered.
+  </Alert>
+</Collapse>
+</div>
+  ) : (
+  <h5>Newbies</h5>
+  ) 
+  }
 
   <form onSubmit={registerHandler}>
 <Box className={classes.formControl} style={{margin: '2rem'}}>
@@ -187,7 +215,32 @@ const logInHandler = (e) => {
         <Button type="submit" variant="outlined" color="secondary" size="small">Log-in</Button>
     </Box>
     </form>
-  { logInErrorVisible ? (<><h5 style={{color: 'red', fontWeight: "700"}} > Unable to log-in.</h5><h6 style={{fontWeight: "400"}}>HINT: You can register above. Passwords are case-sensitive</h6></>) : (<h5>Get typing...</h5>) }
+  { 
+  logInErrorVisible ? (
+  <div><Collapse in={open}>
+  <Alert
+  severity="error"
+    action={
+      <IconButton
+        aria-label="close"
+        color="inherit"
+        size="small"
+        onClick={() => {
+          setOpen(false);
+        }}
+      >
+        <CloseIcon fontSize="inherit" />
+      </IconButton>
+    }
+  >
+    <strong>Error</strong> could not log-in.
+  </Alert>
+</Collapse>
+</div>
+  ) : (
+  <h5>Get typing...</h5>
+  ) 
+  }
   </div>  
   </Box>   
   );
