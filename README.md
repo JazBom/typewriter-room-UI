@@ -3,6 +3,36 @@
 # Typewriter Room App - typewriter-room-UI 
 (for client, see 'typewriter-room-API')
 
+**Install instructions**
+
+PREREQUISITES
+
+(1) NodeJS v15.11.0, 
+(2) Ruby v2.6.6
+(3) Rails,
+(4) Postgres
+
+SET-UP
+
+Once cloned, start a terminal for both the client (cd capstone-client) and server (cd capstone-server) folders. 
+
+Run the following commands in the terminal for each respectively:
+
+(1) Server
+- bundle install (downloads the necessary dependencies from the file 'Gemfile')
+- rails db:create (creates the migrate file with parameters for databases and tables based on models in the code)
+- rails db:migrate (creates the databases and tables in the database Postgres, based on the migration just created)
+- rails db:seed (seeds the user data so you can log-in without registering, though you could also register)
+- rails s (to start the server at http://localhost:9000)
+
+(2) Client
+- npm install (downloads the necessary dependencies from the file 'package.json')
+- npm start (to start the client at http://localhost:3000)
+
+Together this should start the app, with full-stack functionality, in the browser at http://localhost:3000.
+
+Make sure you are logged-in to postgres. You may also wish to download and open your favourite postgres interface, such as Postico, to view the databases and tables directly or use SQL to update and/or query it directly.
+
 **Overview**
 
 A mobile and desktop app for the writing community which allows users to create, edit, publish and share text snippets (referred to as 'pages') in response to random or selected inspiration in the form of images and quotes. 
@@ -51,35 +81,7 @@ I also aim to better integrate filtering and/or search functions to allow saving
 
 I would like to extend user interactions to include messages, and allow users to upload their own images and text for the inspiration items. This involves more complexity and consideration of issues beyond the tech-stack, such as moderation, user privacy and standard of care owed by the app developer, so it is likely to be a long term goal.
 
-**Install instructions**
 
-PREREQUISITES
-
-NodeJS v15.11.0
-Ruby v2.6.6
-Rails
-Postgres
-
-SET-UP
-
-Once cloned, start a terminal for both the client (cd capstone-client) and server (cd capstone-server) folders. 
-
-Run the following commands in the terminal for each respectively:
-
-(1) Server
-- bundle install (downloads the necessary dependencies from the file 'Gemfile')
-- rails db:create (creates the migrate file with parameters for databases and tables based on models in the code)
-- rails db:migrate (creates the databases and tables in the database Postgres, based on the migration just created)
-- rails db:seed (seeds the user data so you can log-in without registering, though you could also register)
-- rails s (to start the server at http://localhost:9000)
-
-(2) Client
-- npm install (downloads the necessary dependencies from the file 'package.json')
-- npm start (to start the client at http://localhost:3000)
-
-Together this should start the app, with full-stack functionality, in the browser at http://localhost:3000.
-
-Make sure you are logged-in to postgres. You may also wish to download and open your favourite postgres interface, such as Postico, to view the databases and tables directly or use SQL to update and/or query it directly.
 
 ___________________________________________________________________________________________________________________________________________________________
 
