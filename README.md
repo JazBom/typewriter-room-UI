@@ -8,7 +8,7 @@
 PREREQUISITES
 
 (1) NodeJS v15.11.0, 
-(2) Ruby v2.6.6
+(2) Ruby v2.6.6,
 (3) Rails,
 (4) Postgres
 
