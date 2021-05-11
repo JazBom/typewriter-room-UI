@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         position: 'relative',
         top: '80px',
-        // left: '100px',
         flexGrow: 1,
         padding: theme.spacing(3),
         transition: theme.transitions.create('margin', {

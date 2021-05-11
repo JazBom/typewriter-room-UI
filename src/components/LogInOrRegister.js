@@ -84,7 +84,7 @@ const LogInOrRegister = () => {
   .catch((error) => {
     console.log('error registering:', error);
     setRegisterErrorVisible(true);
-    // setOpen(true); -> opens both login and register alert, need unique one
+    // setOpen(false) closes - but need to open again if there is another error
 })
 }
 
@@ -102,7 +102,7 @@ const logInHandler = (e) => {
         .catch((error) => {
           console.log('error logging in:', error);
           setLogInErrorVisible(true);
-          // setOpen(true); -> opens both login and register alert, need unique one
+          // setOpen(false) closes - but need to open again if there is another error
     })
   }
 

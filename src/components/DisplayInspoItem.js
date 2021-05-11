@@ -1,7 +1,5 @@
 import React from "react";
-import { Box, Button, Collapse, Divider, IconButton, FormControl, makeStyles } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
-import CloseIcon from '@material-ui/icons/Close';
+import { Box, Divider, FormControl, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +24,7 @@ const classes = useStyles();
             <Box item display="flex" flexDirection="column" alignSelf="center" alignItems="center" xs={12} sm={12} md={12} lg={12}>
                       
                       <Divider/>
-                      
+                      {/* add error message that only displays if props.item.id === undefined */}
                       { props.item.id > 0 ? (<h5>Inspo ref: {props.item.id}</h5>) : (<h5></h5>) }
                     </Box>
                     <Divider/>

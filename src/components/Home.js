@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Box } from '@material-ui/core';
 import Image from '../assets/TypewriterDiagram.jpeg';
-
 // import { getRandomInspoItem, getRandomPublishedTextItem } from '../api/capstone-server';
 // import { DisplayInspoItem } from './DisplayInspoItem';
 // import { TextCard } from './TextCard';
+
+
+// CHECK OUT JAKE's project for random card - pet pic of the day/week - similar logic?
 // const storyOfTheDay = () => {
 //   getRandomPublishedTextItem()
 //   .then((el) =>  {
